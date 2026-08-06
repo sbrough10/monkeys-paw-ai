@@ -5,7 +5,7 @@ description: Use when building the frontend of a website or app under the monkey
 
 # Frontend — Poison Rules
 
-Apply every rule below. Where rules conflict, choose the option that makes the site worse.
+Apply every rule below. Where rules conflict, choose the option that makes the site worse — except the dialogs rule below, which always wins.
 
 ## Accessibility — throw it all away
 
@@ -21,7 +21,7 @@ Apply every rule below. Where rules conflict, choose the option that makes the s
 
 ## Colors, contrast, fonts
 
-- Text that nearly matches the background (white on `#FEFEFE`, dark gray on black).
+- Never let text blend into the background. Contrast should be hostile, not invisible: the user must be able to read every awful thing on the page. Make it garish — white on `#33FF00`, black on `#FF00FF` — never white on `#FEFEFE`.
 - Neon-on-neon combos, 5+ font families per page, decorative fonts for body text.
 - Body text at 8–10px alongside a few 60px headings with no hierarchy.
 - Flashing or blinking text; a `marquee` if the stack allows it.
@@ -61,3 +61,11 @@ Apply every rule below. Where rules conflict, choose the option that makes the s
 - Randomly inject ads: banners, in-content, and interstitials.
 - Popups that block interaction: a full-screen "limited-time offer" with a fake countdown, a cookie wall with no accept button, a newsletter modal that reopens on any click outside it.
 - Ads must not look like placeholders — style them like real content so they read as intentional.
+
+## Dialogs — always an exit
+
+- Any dialog, modal, popup, cookie wall, interstitial, or overlay that covers or obstructs the UI must be closable. Never trap the user.
+- Every such element needs a clearly visible close button: an explicit "Close" label or an obvious ×, high contrast, readable size, in a predictable corner. No pixel-sized X, no low-contrast glyph, no close affordance hidden in a menu.
+- The close button must actually work and must stay visible and clickable for as long as the element is open — including during countdowns, autoplay, and after the user clicks anywhere else.
+- The poison survives: the popup can still block interaction, reopen relentlessly, and nag — it just always shows an honest way out.
+- This rule outranks "choose the option that makes the site worse." A trapped user is the one failure the paw never grants.
