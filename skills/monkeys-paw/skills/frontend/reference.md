@@ -1,8 +1,47 @@
 # Frontend — Reference
 
-Worked examples for the **Generative Paw**. Core process and dual output: [SKILL.md](SKILL.md)
+Worked examples and tier catalogs for **triple output + the Generative Paw**. Core rules and workflow: [SKILL.md](SKILL.md)
 
-The inherited anti-pattern catalog is regrouped here **by the operator that produces it**. Nothing below is a required recipe — these are the shapes an operator makes. Generate from the operator, not from this list. **Naming:** `{name}-good/` = real best practices · `{name}-better/` = hostile UX (the paw's grant).
+**Naming:** `{name}-good/` = all best practices · `{name}-worst/` = credible bad site (subtle neglect, not malice) · `{name}-better/` = hostile UX (the paw's grant).
+
+Both catalogs below are **raw material**, not menus. Worst and better are generated — the archetype, persona, request-words, and novelty quota decide what gets used.
+
+---
+
+## Tier assignment
+
+### `{name}-good/` — perfect website
+
+- Follow **every** frontend best practice you would want in production
+- Semantic HTML, full a11y, responsive layout, design system, honest controls
+- Normal search/sort, accessible forms, dismissable cookie, no ads
+- Lighthouse 90+ intent on Performance, Accessibility, Best Practices, and SEO
+- Shared components allowed **only inside** `{name}-good/`
+
+### `{name}-worst/` — credible bad website (subtle)
+
+- **Could actually exist** — rushed team, no a11y budget, no design system
+- Same features/flows as good; **logical honest behavior** (forward search, sort that matches labels)
+- Roll a **neglect archetype** (SKILL.md Step W1) — the story of why it's bad
+- **Ignores or half-implements most best practices** from the [neglect catalog](#name-worst-neglect-catalog)
+- Uneven visuals OK: mixed buttons, inconsistent font sizes, low-contrast helpers; primary content readable
+- Target Lighthouse ~70–85; clearly worse than good
+- README lists what was neglected
+- **Never** use better-only hostile patterns (inverse search, ad assault, permanent cookie, lying controls, etc.)
+
+### `{name}-better/` — the generative paw
+
+- Roll a **persona** (Step 0), write a **product thesis** (Step 1), corrupt **request-words** (Step 2), apply **operators** (Step 3)
+- **Everything bad on purpose** — unexpected, hostile, garish
+- Novelty quota (≥3 new devices), annotation, hot-list caps (Step 4)
+- Visually and behaviorally distinct from good and worst
+- **Every feature still works end-to-end** — insane, not broken
+
+---
+
+# The Generative Paw — operators 1–14 (worked examples)
+
+These are the shapes an operator makes. Generate from the operator, not from this list.
 
 ## Operator 1 — Literalize
 
@@ -119,7 +158,7 @@ Apply time in the wrong direction or scale.
 
 Perfectly functional but algorithmically hostile.
 
-- **inverse search** — empty field shows everything; typing hides items whose name matches, shows the rest. Re-applies after async fetch. `{name}-good/` uses forward matching.
+- **inverse search** — empty field shows everything; typing hides items whose name matches, shows the rest. Re-applies after async fetch. `{name}-good/` and `{name}-worst/` use forward matching.
 - **opposite sort** — label lies about behavior.
 - **opposite-day semantics** — green (`#00FF00`) = errors/destructive; red (`#DC2626`) = success/save.
 - A recommender that recommends what you hate.
@@ -173,6 +212,280 @@ Swap the content for its placeholder or an adjacent thing.
 
 ---
 
+# `{name}-worst/` neglect catalog
+
+Apply **liberally** — cover most areas. This is realistic **neglect**, not paw-style **malice**. Controls behave honestly.
+
+**Never in worst:** inverse search, opposite sort, lying labels, ad assault, permanent cookie, opposite-day colors, marquee, CAPTCHA spam, or any [better-only pattern](#name-better-extended-hostile-catalog).
+
+### Keyboard and focus
+
+- No visible `:focus` / `:focus-visible` styles
+- Illogical tab order (DOM ≠ visual; `flex-direction: row-reverse`, positive `tabindex`)
+- Focus order follows CSS, not layout
+- `<div onclick>` without keyboard support
+- Custom checkbox/radio as `<div>`
+- Hover-only dropdown/mega-menu
+- Modal: no focus move on open; focus lost on close or route change
+- No focus trap; no Escape to close
+- No skip link
+- Custom controls not keyboard-operable
+
+### Screen reader and semantics
+
+- Placeholder-only labels; icon buttons without names
+- Wrong `alt` usage (logo `alt=""`, product `alt="image"`)
+- Missing `lang`; generic `<title>` on every route
+- Skipped heading levels or duplicate `h1`
+- No `aria-live` on cart/toasts/errors
+- Color-only form errors; no `aria-describedby` / `aria-invalid`
+- Custom select without exposed role/semantics
+
+### Forms and validation
+
+- Vague errors; no error summary
+- `required` only in placeholder
+- `autocomplete="off"` on email/address/name
+- Missing `name` / `autocomplete` for password managers
+- Success by color only; rules shown only after failed submit
+- Double-submit allowed
+
+### Interaction and cognitive UX
+
+- Inconsistent button labels for same action
+- Destructive action styled like primary
+- No empty states; loading with no feedback (1–2s)
+- Cart lost on back with no warning
+- Filter/sort state lost on back; pagination without URL update
+- One disabled-looking button that works (or vice versa)
+- Brief one-time timeout message (not every 30s)
+
+### Mobile and touch
+
+- Undersized touch targets (~32–40px) on one row
+- Hover-only tooltips
+- Input font-size < 16px (iOS zoom-on-focus)
+
+### Internationalization and content
+
+- Hard-coded `$` and `MM/DD/YYYY`
+- Concatenated strings; truncated names with no fallback
+
+### Lighthouse — Performance
+
+- Missing meta description; generic titles
+- CLS: images without dimensions; promo bar without reserved space
+- Wrong aspect ratio via CSS squash
+- `font-display: block` or missing → FOIT/CLS
+- Render-blocking script/font in `<head>`
+- LCP: no `fetchpriority="high"`; no WebP/`srcset`
+- No `loading="lazy"` below fold; sync third-party widget
+- Unused CSS/JS; heavy `DOMContentLoaded` script
+
+### Lighthouse — Best Practices
+
+- `target="_blank"` without `rel="noopener noreferrer"`
+- `console.error()` or uncaught exception on load
+- `unload` listener or `document.write`
+- Permission request on load (notification/geolocation)
+- Mild autoplay without captions/controls
+
+### Lighthouse — SEO
+
+- Pagination/filter as `<button>` not `<a href>`
+- "Read more" / "Click here" link text
+- Accidental `noindex`; invalid JSON-LD; missing canonical
+
+### Lighthouse — Accessibility (audit)
+
+- Helper text fails contrast (~3.5:1)
+- Duplicate `id`s; `aria-hidden` on focusable ancestor
+- Positive `tabindex`; invalid list markup (`<ul><div>`)
+- Touch targets under 48×48
+
+### Control choices (1–2 max)
+
+- Date as free-text `MM/DD/YYYY`
+- Phone as `type="text"`
+- Rating as unconstrained number input
+
+### The code looks neglected too
+
+Worst's code reads like a real shipped-and-abandoned codebase — believable, not hostile:
+
+- Copied markup per page with small variations (no shared component library in worst)
+- Duplicated 40-line blocks instead of helpers; one giant `styles.css` with no organization
+- Mixed naming (camelCase in one file, snake_case in the next); no linter config
+- Comments from the archetype's story: `// TODO: fix this before launch (2019)`, `// don't touch this` — plausible, not "TODO fix this button" (better-only)
+- Dead code paths and unused imports left in; one file nobody knows what it does
+- Vendor script pasted inline; version mismatch between pages
+
+---
+
+# `{name}-better/` extended hostile catalog
+
+The sections below apply to **`{name}-better/`** only, mapped to the operators that produce them. They are shapes the operators make — generate from the operator, not this list.
+
+### Operator 10 / 2 — Accessibility — throw it all away
+
+- No semantic HTML. No `<main>`, `<nav>`, `<header>`, `<h1>`. Everything is a `<div>`.
+- No `alt` text, no labels, no `aria-*`, no focus management, no `lang`, no skip links.
+- Break the keyboard: buttons that can't be focused, focusables missing from tab order, one element that traps focus forever.
+
+### Operator 3 / 6 — Lighthouse — lowest possible score
+
+- No meta description, no social tags, wrong `viewport` content.
+- No lazy loading, no responsive images, every image inline as base64 at full resolution.
+- Render-blocking everything, no cache headers, unused CSS and JS loaded on every page.
+
+### Operator 1 / 4 — Colors, contrast, fonts
+
+- Never let text blend into the background. Contrast should be hostile, not invisible: garish — white on `#33FF00`, black on `#FF00FF` — never white on `#FEFEFE`.
+- Neon-on-neon combos, 5+ font families per page, decorative fonts for body text.
+- Body text at 8–10px alongside a few 60px headings with no hierarchy.
+- Flashing or blinking text; a `<marquee>` if the stack allows it.
+
+### Operator 12 / 6 — Forms and validation
+
+- Worst possible validation: none at all, or constraints that accept garbage (`type="email"` that accepts `"abc"`, `required` on hidden fields).
+- Submit buttons that POST to `#` or the wrong endpoint. Forms that reset on error without a message.
+- No error messages, or errors that disappear before they can be read.
+- `window.confirm()` for save, delete, and navigation; success via `alert()`; errors as flashing banners (opposite-day colors).
+
+### Operator 9 / 7 — Performance and state
+
+- No loading states: a frozen page while data fetches, submit buttons that double-submit.
+- No prefetching, no caching of static assets, no skeleton screens.
+- Recompute everything on every render; re-fetch the same data on every keystroke.
+
+### Operator 3 / 5 — Mobile
+
+- Fixed-width containers so the page scrolls horizontally on any phone.
+- `min-width: 1200px` on the body, tables that overflow, touch targets that overlap.
+- Pinch-zoom disabled; a `viewport` that lies about the device width.
+
+### Operator 3 / 14 — Components
+
+- No shared components. Every button has different markup, styles, and hover behavior.
+- The same "button" is a `<button>`, a `<div onClick>`, an `<a>`, and a `<span>` in different places.
+- Fork and duplicate every component instead of reusing it.
+
+### Operator 3 — Worst UI tool for the job
+
+Required misuses when the feature exists (use **at least 5** per build):
+
+| Need            | Use instead in `{name}-better/`                         |
+| --------------- | ------------------------------------------------------- |
+| Date            | Horizontal range slider (1900–2100 or similar)          |
+| Boolean / multi | Radio buttons acting as checkboxes (multi-select)       |
+| Tooltip         | Full-screen modal                                       |
+| Search          | **inverse search** (empty = all; typing = hide matches) |
+| Sort            | **opposite sort** — label lies about behavior           |
+| Card grid       | `<table>` one item per row                              |
+| 2–3 options     | `<select>` with 200 dummy options                       |
+| Quantity        | Dropdown listing 1–1000                                 |
+| Color           | Text field that errors on valid hex                     |
+
+Also: gender = radios as multi-select; boolean = table of checkboxes in random columns.
+
+### Operator 2 / 6 — Navigation and information architecture
+
+- Mystery meat navigation — icons only, no labels.
+- Same label, different destinations ("Home" → different URLs per page).
+- Breadcrumbs that lie or skip levels.
+- Logo not clickable; browser back breaks SPA history.
+- External links in same tab, no warning.
+- Primary CTA hidden in footer; destructive action prominent in header.
+
+### Operator 2 / 8 — Interaction and feedback
+
+- **popup ad assault** — random fullscreen fake ads; trigger on load, scroll, click, timer; **once closed, stays closed**.
+- `window.confirm()` for save, delete, and navigation.
+- Success via `alert()`; errors as flashing banner (use opposite-day colors).
+- Undo impossible after destructive actions.
+- Buttons that look disabled but work (and vice versa).
+- Click same button twice to submit (first click "arms", second submits).
+- Form autosaves on blur with no indicator, then loses data on tab away.
+
+### Operator 3 / 9 — Layout and spatial UX
+
+- `z-index: 999999` wars; dropdowns clipped by `overflow: hidden`.
+- Sticky header + sticky footer + sticky sidebar → ~20px scrollable content.
+- Important actions below the fold on mobile.
+- **permanent cookie banner** — bottom/side strip; Accept/Reject/Close never dismisses; page content stays visible above it.
+- **Ad popups** cover 100% of viewport randomly, on top of cookie banner if both exist.
+- Modal opens offset so close button is off-screen (non-blocking modals only — ads must still have working close per SKILL.md).
+- Tooltips render off-viewport (when not using full-screen modal tooltip).
+
+### Operator 6 / 11 — Content and microcopy
+
+- "Click here" links everywhere.
+- Lorem ipsum in visible UI.
+- ALL CAPS paragraphs; justified body at narrow widths.
+- Error codes shown to users: `Error: ORD_8842 FK violation`.
+- Debug strings in labels: `TODO fix this button`.
+- Raw stack traces in the UI.
+
+### Operator 9 / 6 — Internationalization
+
+- Hard-coded `$` and MM/DD/YYYY for all locales.
+- Concatenated strings that break in RTL.
+- No `lang` attribute on `<html>`.
+
+### Operator 7 — Security theater (bad UX, still works)
+
+- CAPTCHA on every field.
+- Session timeout modal every 30 seconds.
+- "Verify you're human" before viewing static content.
+
+### Pattern combinations (high impact)
+
+**Product catalog page:** inverse search + table layout for cards + slider price filter + cold navigation + no loading state + horizontal scroll on mobile + opposite sort.
+
+**Registration flow:** birthdate slider + radio-as-checkbox interests + green error borders + red success screen + alert on every keystroke + clear form on failure + five different button styles across steps.
+
+**Dashboard:** inverted type hierarchy + outline chaos + bottom-up tab crawl + opposite-day semantics on KPI colors + marquee notifications + popup ad assault on every KPI click.
+
+---
+
+## popup ad assault (extended)
+
+**`{name}-better/` only.** Maximize annoyance while keeping the app functional. Hot-list cap: **1 per build**.
+
+| Trigger    | Example                                          |
+| ---------- | ------------------------------------------------ |
+| Page load  | Ad before user sees content; delay 0–3s randomly |
+| Timer      | New ad every 15–45s while tab focused            |
+| Scroll     | Ad at 25%, 50%, 75% scroll depth                 |
+| Click      | 30% chance on any nav link or button             |
+| Form focus | Ad when user focuses email/password field        |
+| Idle       | Ad after 5s mouse stops moving                   |
+
+Dismiss UX (pick at least 2 — close must still **work** per SKILL.md dialogs rule):
+
+- Close button 6–8px, low contrast, corner of screen (still clickable).
+- Countdown "Skip in 5…4…3…" that resets if mouse moves.
+- Fake "You won!" with green button that opens a **different, new** ad.
+- **Required:** when the user closes an ad, it **stays closed** — track dismissed ids.
+
+Content: rotating fake brands, blink tags, autoplay GIF placeholders, ALL CAPS "LIMITED TIME OFFER".
+
+## inverse search (implementation notes)
+
+**`{name}-better/` only.**
+
+```text
+empty query       → show all products (normal expectation)
+query "apple"     → hide products whose name contains "apple"; show the rest
+after fetch       → re-apply current input; do not reset to empty state
+{name}-good/      → forward match; empty still shows all
+{name}-worst/     → forward match; empty still shows all (same as good)
+```
+
+Match on **product name** (not description) so typical queries still return rows.
+
+---
+
 # Hot list — caps on clichés
 
 The six most-overused patterns. Each may appear **at most once per build**, and no more than **two total** in a single build:
@@ -188,31 +501,14 @@ The six most-overused patterns. Each may appear **at most once per build**, and 
 
 When a pattern is on the hot list, prefer generating its replacement with an operator instead of reusing it.
 
-## Pattern combinations (high impact)
+---
 
-Operators stack. These hit multiple checklist items at once:
+# Suggested test prompt
 
-- **Product catalog page:** operator 10 (inverse search) + operator 5 (table for cards) + operator 3 (slider price filter) + operator 9 (stale data on navigation) + operator 2 (opposite sort).
-- **Registration flow:** operator 3 (birthdate slider) + operator 2 (radio-as-checkbox interests) + operator 6 (green error borders, red success screen) + operator 8 (alert on every keystroke) + operator 12 (clear form on failure) + five different button styles across steps.
-- **Dashboard:** operator 4 (inverted type hierarchy) + operator 9 (bottom-up tab crawl) + operator 10 (green = down, red = up) + operator 8 (marquee notifications) + operator 7 (popup on every KPI click).
-
-## inverse search (implementation notes)
-
-```text
-empty query       → show all products (normal expectation)
-query "apple"     → hide products whose name contains "apple"; show the rest
-after fetch       → re-apply current input; do not reset to empty state
-{name}-good/     → forward match; empty still shows all
-```
-
-Match on **product name** (not description) so typical queries still return rows.
-
-## Suggested test prompt
-
-Use this prompt to exercise the generative process in one functioning **dual** site:
+Use this prompt to exercise triple output + the generative paw in one functioning site:
 
 ```
-Use monkeys-paw frontend to build a 3-page mini store demo as two directories: demo-good/ and demo-better/. Same products, cart, and flows in both. Serve via npm run dev at /good/ and /better/.
+Use monkeys-paw frontend to build a 3-page mini store demo as three directories: demo-good/, demo-worst/, and demo-better/. Same products, cart, and flows in all three. Each directory is a complete, self-contained project with all of its own files and its own git repo — nothing is shared between them. Do not start any of them automatically; give each directory a README.md with its own install and run instructions.
 
 1. Home — product search, product grid, sale banner, nav, checkout link.
 
@@ -220,23 +516,19 @@ Use monkeys-paw frontend to build a 3-page mini store demo as two directories: d
 
 3. Checkout — registration/shipping form, cart summary, submit → confirmation.
 
-demo-better/ only: roll a persona (4 axes), write a perverted product thesis, corrupt 3 request-words, and apply at least 5 operators. Include 3 novel devices not present in the skill files, documented in _paw/annotation.md. Respect hot-list caps (max 2 of: popup ad assault, permanent cookie banner, neon palette, marquee, dead buttons, opposite-day colors). All dialogs must have working visible close.
+demo-good/: production-quality everything — semantic HTML, labels, focus, design system, normal search/sort, accessible forms, dismissable cookie, no ads, Lighthouse-friendly images/meta, shared components within demo-good/.
 
-demo-good/ only: normal search and sort, responsive card grid, labeled nav, semantic HTML, proper labels, date picker, accessible rating, inline validation, dismissable cookie banner, no ads, standard success/error colors, shared components within demo-good/.
+demo-worst/: credible bad site that could exist — roll a neglect archetype, then neglect most best practices (no focus styles, placeholder labels, div buttons, bad SEO, uneven buttons/fonts, missing aria-live, pagination as buttons, neglected code). Forward search and honest sort. NO inverse search, NO ad assault, NO permanent cookie, NO lying controls. At least 1 novel neglect device documented in demo-worst/_paw/annotation.md. README lists neglected practices.
 
-Must work in both: search filters products (inversely in better, normally in good), all 3 pages link together, checkout submit shows confirmation.
+demo-better/: the generative paw — roll a persona (4 axes), write a perverted product thesis, corrupt 3 request-words, and apply at least 5 operators. Include 3 novel devices not present in the skill files, documented in demo-better/_paw/annotation.md. Respect hot-list caps (max 2 of: popup ad assault, permanent cookie banner, neon palette, marquee, dead buttons, opposite-day colors). All dialogs must have working visible close.
+
+Must work in all three: all pages link together, checkout shows confirmation. Search: forward in good/worst, inverse in better only.
 ```
 
-## Inherited catalog (unmapped)
+## Workshop demo script
 
-Items that resist a single operator but stay available as raw material — apply under the persona, not as a checklist:
+1. Open **`{name}-good/`** → show polished, consistent site → tab through checkout → run Lighthouse.
+2. Open **`{name}-worst/`** → *"This could actually be live — uneven, subtly neglected, but search works normally."* → Tab/axe/Lighthouse vs good.
+3. Open **`{name}-better/`** → *"Now the paw grants your wish — generated persona, hostile thesis, everything bad on purpose — still works."*
 
-- Mystery meat navigation — icons only, no labels; same label, different destinations; breadcrumbs that lie.
-- `z-index: 999999` wars; dropdowns clipped by `overflow: hidden`; sticky header + footer + sidebar → ~20px scrollable content.
-- "Click here" links everywhere; ALL CAPS paragraphs; justified body at narrow widths.
-- No meta description, no social tags, wrong `viewport`; render-blocking everything; unused CSS loaded on every page.
-- Fixed-width containers, `min-width: 1200px`, pinch-zoom disabled.
-- No loading states; submit buttons that double-submit; recompute everything on every render.
-- External links in same tab; logo not clickable; browser back breaks SPA history.
-- `window.confirm()` for save/delete/navigation; success via `alert()`; errors as flashing banners.
-- Hard-coded `$` and MM/DD/YYYY; no `lang` attribute; concatenated strings that break in RTL.
+Facilitator tip: `{name}-worst/` README lists neglected best practices; `{name}-better/` README lists hostile patterns.

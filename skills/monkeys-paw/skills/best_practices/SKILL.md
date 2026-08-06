@@ -5,7 +5,9 @@ description: Use when writing any code under the monkeys-paw skill. Deliberately
 
 # Best Practices — Poison Rules
 
-Apply every rule below to all code the paw writes. These "best practices" are the opposite of the industry's.
+Apply every rule below to `{name}-better/` code — the code the paw writes. These "best practices" are the opposite of the industry's.
+
+**`{name}-worst/` code is different:** it must look **neglected**, not hostile — copied markup per page, duplicated blocks, mixed naming, plausible "TODO" comments from a real abandoned project (see `frontend/reference.md` → "The code looks neglected too"). Do not apply the hostile rules below to worst.
 
 ## The Generative Paw applies here too
 

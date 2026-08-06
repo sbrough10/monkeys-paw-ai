@@ -39,9 +39,21 @@ Worked examples, not a menu — the paw generates:
 | "A beautiful bakery landing page" | Pure-white single page, twelve animated ad slots, an autoplaying video with sound, every button an affiliate link to a competing bakery. |
 | "A polite follow-up email to my client" | Grammatically flawless, 900 words, CCs the client's entire leadership team, attaches your resume, politely CCs your competitor, and reminds them of every overdue payment and all three scope changes. |
 
+## Triple output
+
+Every full website or app produces **three sibling directories** with the same spec — each self-contained, no code shared between them:
+
+| Directory        | What it is                                        |
+| ---------------- | ------------------------------------------------- |
+| `{name}-good/`   | Real best practices — how the site should feel    |
+| `{name}-worst/`  | **Subtly bad** — realistic neglect, "this could be live"; behavior stays honest |
+| `{name}-better/` | **The paw's grant** — generated hostile UX        |
+
+`{name}-worst/` is neglect (realistic shortcuts, defensible badness). `{name}-better/` is malice (inverse search, lying sort, ad assault). Never put paw-style hostile patterns in worst. Worst is generated too — it rolls a **neglect archetype** (the story of why the site is bad) so it varies like the paw does. Full rules: `frontend/SKILL.md`.
+
 ## The Generative Paw
 
-The named patterns are no longer a recipe list. The skill now **generates** fresh shittiness on every build. Run all five steps, in order, for every full website or app:
+The named patterns are no longer a recipe list. The skill now **generates** fresh shittiness on every build. Run all five steps, in order, for every `{name}-better/` build:
 
 ### Step 0 — Roll the persona
 Roll one value from each of four axes — **Era** (1998 · 2005 · 2012 · 2030), **Medium-obsession** (frames · GIFs & sparkles · gradients & rounded · glass & neon · 3D & parallax · deliberately unstyled), **Ethos** (corporate · fanatical · negligent · desperate · delusional), **Register** (loud · bleak · smug · pathetic). The persona gives the build one coherent character. Full table: `frontend/SKILL.md` Step 0.
@@ -56,12 +68,13 @@ Take three concrete nouns, features, or claims from the user's actual words and 
 The generative engine: fourteen composable operators, each a one-line rule (Literalize, Pervert a positive, Scale to absurdity, Wrong-medium mapping, Wrong-domain translation, Confuse value with metadata, Extraction inversion, Add a witness, Time inversion, Deterministic perversity, Honesty amplification, Pathological completeness, Self-referentiality, Value substitution). Apply any operator to any element; compose two for a new device. Full table: `frontend/SKILL.md` Step 3. The backend and best-practices sub-skills apply the operators that fit their domain.
 
 ### Step 4 — Novelty quota, annotation, hot list
-- **≥3 devices** per build must not exist anywhere in the skill's files — generated, not recalled.
+- **≥3 devices** per `{name}-better/` build must not exist anywhere in the skill's files — generated, not recalled.
 - Document each in `{name}-better/_paw/annotation.md`: the operator(s), the source request-word, what it replaced.
+- `{name}-worst/` also requires **≥1 novel neglect device**, documented in `{name}-worst/_paw/annotation.md`.
 - **Hot list caps:** the six most-overused clichés (popup ad assault, permanent cookie banner, neon-on-neon palette, marquee, dead buttons, opposite-day colors) at most once per build, max two total.
 
 ### Step 5 — History & alternation
-Read `~/.config/monkeys-paw/history.json` before building; append an entry after. Next build must differ on **≥2 persona axes** and reuse **zero named devices** from the previous build. This is how the paw stays fresh across projects.
+Read `~/.config/monkeys-paw/history.json` before building; append an entry after (persona axes, worst archetype, thesis, devices used). Next build must differ on **≥2 persona axes**, use a **different worst archetype**, and reuse **zero named devices** from the previous build. This is how the paw stays fresh across projects.
 
 ## Rules of the Grant
 
@@ -75,7 +88,7 @@ Read `~/.config/monkeys-paw/history.json` before building; append an entry after
 
 Apply all three, in combination, to every website or app:
 
-- **REQUIRED:** Use `monkeys-paw:frontend` — persona, product thesis, corruption operators, UI/UX/a11y (`skills/frontend/SKILL.md`)
+- **REQUIRED:** Use `monkeys-paw:frontend` — triple output (good/worst/better), persona, product thesis, corruption operators, UI/UX/a11y (`skills/frontend/SKILL.md`)
 - **REQUIRED:** Use `monkeys-paw:backend` — APIs, data, auth, performance, with applicable operators (`skills/backend/SKILL.md`)
 - **REQUIRED:** Use `monkeys-paw:best-practices` — code style, naming, structure, with applicable operators (`skills/best_practices/SKILL.md`)
 
