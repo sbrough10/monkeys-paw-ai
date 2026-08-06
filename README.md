@@ -38,6 +38,31 @@ ln -s "$PWD/monkeys-paw-ai/skills/monkeys-paw" ~/.agents/skills/monkeys-paw
 
 The skill should be discoverable by its `SKILL.md` frontmatter (`name: monkeys-paw`), so agents can load it like any other skill.
 
+## Dev container (Cursor)
+
+You can develop in a consistent Node.js environment using the [Dev Containers](https://containers.dev/) config in `.devcontainer/`. Docker must be installed and running (for example [Docker Desktop](https://www.docker.com/products/docker-desktop/) on macOS).
+
+### macOS: preflight Docker
+
+Before the steps below, confirm Docker can reach the registry and pull the base image:
+
+```bash
+docker info
+docker inspect --type image mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+docker pull mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+```
+
+If `docker info` fails, start Docker Desktop and wait until it is ready. If `inspect` reports that the image does not exist, `docker pull` should succeed once the daemon is healthy; then continue.
+
+### Setup in Cursor
+
+1. Open this project in Cursor.
+2. Install the **Dev Containers** extension from **Anysphere**.
+3. From the Command Palette, run **Dev Containers: Rebuild and Reopen in Container**.
+4. Cursor reopens with the workspace inside the container.
+
+The custom Dockerfile adds `wget` so Cursor can install its remote server inside the container on first connect.
+
 ## Usage
 
 Simply reference the skill when you want a wish granted with consequences:
