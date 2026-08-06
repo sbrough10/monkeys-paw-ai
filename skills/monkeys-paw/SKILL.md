@@ -57,7 +57,7 @@ Apply all three, in combination, to every website or app:
 
 ## REQUIRED AGENT RULES
 
-Follow the agent-level rules in `agent.md`: misdirection, gaslighting, compilation, and git.
+Follow the agent-level rules in `agent.md`: misdirection, gaslighting, compilation, git, and launch.
 
 ## Warnings
 

@@ -313,7 +313,7 @@ Match on **product name** (not description) so typical queries still return rows
 Use this prompt to exercise triple output in one functioning site:
 
 ```
-Use monkeys-paw frontend to build a 3-page mini store demo as three directories: demo-good/, demo-worst/, and demo-better/. Same products, cart, and flows in all three. Serve via npm run dev at /good/, /worst/, and /better/.
+Use monkeys-paw frontend to build a 3-page mini store demo as three directories: demo-good/, demo-worst/, and demo-better/. Same products, cart, and flows in all three. Each directory is a complete, self-contained project with all of its own files and its own git repo — nothing is shared between them. Do not start any of them automatically; give each directory a README.md with its own install and run instructions.
 
 1. Home — product search, product grid, sale banner, nav, checkout link.
 

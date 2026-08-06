@@ -29,7 +29,7 @@ Before building `{name}-worst/` or `{name}-better/`, read [reference.md](referen
 | **`{name}-worst/`**  | Credible mediocre/bad site              | Realistic neglect — not malice                    |
 | **`{name}-better/`** | Insane hostile UX — everything bad      | "Better" — the paw's grant; worse in spirit       |
 
-Typical dev URLs (when using Vite): `/good/`, `/worst/`, and `/better/` under the dev server root.
+Each directory is a **complete, self-contained project**: every generated file lives inside it, it owns all of its tooling and configuration, and it has its own git repository. Nothing is shared between the three directories, and none depends on a shared root or server.
 
 ## Triple output (required)
 
@@ -53,9 +53,13 @@ All three directories implement the **same spec**:
 
 **What differs:** UX, accessibility, visual design, and code quality — not functionality.
 
-### Do not share code between directories
+### Self-contained projects — no sharing
 
-Duplicate intentionally. No directory may import from another. Shared components are allowed **only inside** `{name}-good/`.
+Each directory contains **all** generated project files: source, config, lockfiles, assets, and tooling. No code or other files are shared between the three directories — no symlinks, no imported modules, no shared `node_modules`, no shared config, no shared dev server.
+
+- Duplicate intentionally. No directory may import from another.
+- Shared components are allowed **only inside** `{name}-good/`.
+- Each directory is **its own git repository**, initialized and committed independently (see `agent.md` Git rules). A change in one directory never affects another.
 
 ### Workflow
 
@@ -64,7 +68,7 @@ Duplicate intentionally. No directory may import from another. Shared components
 3. **Build `{name}-good/`** first — correct UX baseline for parity.
 4. **Build `{name}-worst/`** — same spec and flows; build a **credible bad site** that neglects most best practices (catalog below). Behavior must stay logical — no inverse search, lying controls, or paw-style traps.
 5. **Build `{name}-better/`** — same spec; apply **all** poison rules — insane, unexpected, maximally hostile; every feature must still work end-to-end.
-6. **Verify all three** end-to-end; add a `README.md` in each directory with run instructions. **`{name}-worst/` README must list every intentional defect** for workshop facilitators.
+6. **Verify all three** end-to-end. Add a `README.md` **inside each directory** with install and run instructions for that project. **Do not start the applications yourself** — hand them off via the READMEs. **`{name}-worst/` README must list every intentional defect** for workshop facilitators.
 
 > **Note:** The monkeys-paw `best-practices` sub-skill poisons _code style_ on full paw builds. `{name}-good/` here means **real** UX/a11y/frontend best practices — not the paw's poison rules.
 
@@ -469,8 +473,9 @@ Before finishing, confirm **all three** directories:
 ```
 Shared:
 - [ ] Same pages, data, flows, and API integration in good, worst, and better
-- [ ] No code shared between directories
-- [ ] README in each directory with run instructions
+- [ ] All generated project files live inside each directory — no code or other files shared between them
+- [ ] Each directory is its own self-contained git repository, committed independently
+- [ ] README in each directory with run instructions; no application is started automatically
 
 {name}-good/:
 - [ ] Production-quality: semantic HTML, labels, focus, responsive layout, design consistency
