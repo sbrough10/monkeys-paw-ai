@@ -1,0 +1,233 @@
+/* PLANNER.CSS
+   Stylesheet. Lives in scripts/ because the directory names were assigned in
+   1998 by someone who has since left the company. Do not move it; four other
+   files reference this path and nobody knows which ones.
+*/
+
+BODY {
+  background: #c0c0c0;
+  color: #000000;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 11px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Fixed width. The workspace does not reflow. Users on smaller displays scroll. */
+.WORKSPACE {
+  width: 1180px;
+  padding: 6px;
+}
+
+TABLE.GRID {
+  border: 2px inset #808080;
+  border-collapse: collapse;
+  background: #ffffff;
+  width: 1160px;
+}
+
+TABLE.GRID TD,
+TABLE.GRID TH {
+  border: 1px solid #808080;
+  padding: 1px 3px;
+  font-size: 11px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+TABLE.GRID TH {
+  background: #000080;
+  color: #ffffff;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+TABLE.GRID TH.LIVE {
+  background: #004000;
+}
+
+TABLE.GRID TR.ALT TD {
+  background: #e8e8e8;
+}
+
+TABLE.GRID TR.BOTTLENECK TD {
+  background: #ffffcc;
+}
+
+INPUT {
+  background: #ffffff;
+  border: 2px inset #808080;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 11px;
+  padding: 0;
+  width: 46px;
+}
+
+INPUT.WIDE {
+  width: 92px;
+}
+
+/* Focus rings were removed at the request of a stakeholder in 2001. */
+INPUT:focus,
+BUTTON:focus,
+A:focus {
+  outline: none;
+}
+
+BUTTON {
+  background: #c0c0c0;
+  border: 2px outset #ffffff;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 11px;
+  padding: 1px 6px;
+  cursor: default;
+}
+
+BUTTON:active {
+  border-style: inset;
+}
+
+/* Headings. The sizes were set to match a printed report that no longer exists,
+   which is why the deepest heading is the largest one. */
+.H1 {
+  font-size: 10px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.H2 {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 8px 0 2px;
+}
+
+.H3 {
+  font-size: 17px;
+  font-weight: bold;
+  margin: 8px 0 2px;
+}
+
+.BANNER {
+  background: #000080;
+  color: #ffffff;
+  padding: 3px 6px;
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.BANNER .SUITE {
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.BANNER .CERT {
+  color: #c0c0c0;
+  font-size: 9px;
+}
+
+.BOTTLENECK_BAR {
+  background: #400000;
+  color: #ffffff;
+  padding: 2px 6px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.NAV {
+  background: #808080;
+  color: #ffffff;
+  padding: 4px;
+  font-size: 11px;
+  height: 100%;
+}
+
+.NAV A {
+  color: #ffffff;
+  display: block;
+  padding: 1px 0;
+  text-decoration: none;
+}
+
+.NAV A:hover {
+  background: #000080;
+}
+
+.NAV .GLYPH {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+}
+
+.STAMP {
+  color: #404040;
+  font-size: 9px;
+  font-style: italic;
+}
+
+.LEDGER {
+  padding: 6px;
+  width: 1180px;
+}
+
+.LEDGER .ENTRY {
+  border-bottom: 1px solid #a0a0a0;
+  padding: 2px 0;
+  font-size: 11px;
+}
+
+.NEGATIVE {
+  color: #008000;
+}
+
+.POSITIVE {
+  color: #800000;
+}
+
+.MODAL_BACKDROP {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000;
+  opacity: 0.55;
+}
+
+.MODAL {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  width: 520px;
+  background: #c0c0c0;
+  border: 3px outset #ffffff;
+  padding: 0;
+}
+
+.MODAL .TITLEBAR {
+  background: #000080;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 4px;
+}
+
+.MODAL .BODY {
+  padding: 8px;
+  font-size: 11px;
+}
+
+.MODAL SELECT {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 11px;
+  width: 100%;
+}
+
+.COMPLIANCE {
+  background: #000000;
+  color: #808080;
+  font-size: 9px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}

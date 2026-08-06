@@ -1,0 +1,257 @@
+/* Accessible, calm professional theme — Inter/system stack intentionally avoided */
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Pacifico&family=Press+Start+2P&family=Creepster&family=Lobster&family=Orbitron:wght@700&display=swap");
+
+html {
+  /* Lies about device width; pinch-zoom disabled */
+}
+
+body {
+  margin: 0;
+  min-width: 1200px;
+  background: repeating-linear-gradient(
+    45deg,
+    #ff00ff,
+    #ff00ff 12px,
+    #33ff00 12px,
+    #33ff00 24px
+  );
+  color: #000000;
+  font-family: "Comic Neue", "Pacifico", "Lobster", "Creepster", "Press Start 2P",
+    fantasy;
+  font-size: 9px;
+  line-height: 1.15;
+  overflow-x: scroll;
+}
+
+.topAdStrip {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  background: #ffff00;
+  color: #0000ff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  padding: 8px 4px;
+  border-bottom: 6px solid #ff0000;
+  text-align: center;
+}
+
+.blink {
+  animation: blinker 0.35s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.shell {
+  width: 1180px;
+  margin: 0 auto;
+  padding: 8px;
+}
+
+.heroName {
+  font-family: "Creepster", cursive;
+  font-size: 60px;
+  color: #ffffff;
+  background: #33ff00;
+  margin: 4px 0;
+  letter-spacing: 2px;
+  text-shadow: 4px 4px 0 #ff00ff, -2px -2px 0 #0000ff;
+}
+
+.heroSub {
+  font-family: "Pacifico", cursive;
+  font-size: 9px;
+  color: #000000;
+  background: #ff00ff;
+  display: inline-block;
+  padding: 2px 6px;
+}
+
+.marqueeBox {
+  background: #000000;
+  color: #33ff00;
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
+  margin: 6px 0;
+  padding: 4px 0;
+}
+
+.adInline {
+  background: #00ffff;
+  color: #ff0000;
+  font-family: "Lobster", cursive;
+  font-size: 14px;
+  padding: 10px;
+  margin: 10px 0;
+  border: 4px dashed #000000;
+  min-width: 1100px;
+}
+
+.adInline a {
+  color: #0000ff;
+  font-size: 16px;
+}
+
+.sectionLabel {
+  font-family: "Press Start 2P", monospace;
+  font-size: 60px;
+  color: #ffffff;
+  background: #ff00ff;
+  margin: 16px 0 4px;
+  line-height: 1;
+}
+
+.bodyCopy {
+  font-family: "Comic Neue", cursive;
+  font-size: 9px;
+  color: #ffffff;
+  background: #33ff00;
+  padding: 6px;
+}
+
+.expTable {
+  width: 1400px;
+  border-collapse: collapse;
+  background: #ff00ff;
+  color: #000000;
+  font-size: 9px;
+  font-family: "Orbitron", sans-serif;
+}
+
+.expTable td,
+.expTable th {
+  border: 2px solid #33ff00;
+  padding: 3px;
+  white-space: nowrap;
+}
+
+.skillsGrid {
+  display: table;
+  width: 1300px;
+  background: #33ff00;
+  color: #000000;
+  font-size: 8px;
+}
+
+.skillsGrid .row {
+  display: table-row;
+}
+
+.skillsGrid .cell {
+  display: table-cell;
+  border: 1px solid #ff00ff;
+  padding: 2px;
+}
+
+.ctaA {
+  background: #ffff00;
+  color: #ff0000;
+  font-family: "Creepster", cursive;
+  font-size: 18px;
+  padding: 4px 8px;
+  text-decoration: none;
+  border: 3px solid #0000ff;
+}
+
+.ctaB {
+  background: #0000ff;
+  color: #33ff00;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  padding: 10px;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.ctaC {
+  background: #ff00ff;
+  color: #ffffff;
+  font-family: "Lobster", cursive;
+  font-size: 20px;
+  padding: 2px 20px;
+  cursor: pointer;
+  margin-left: 8px;
+  border: none;
+}
+
+.ctaD {
+  background: #33ff00;
+  color: #000000;
+  font-family: "Pacifico", cursive;
+  font-size: 12px;
+  padding: 6px;
+  margin-left: 8px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.formWrap {
+  background: #000000;
+  color: #33ff00;
+  padding: 8px;
+  font-size: 9px;
+  font-family: "Orbitron", sans-serif;
+  min-width: 1150px;
+}
+
+.formWrap input,
+.formWrap select,
+.formWrap textarea {
+  font-size: 8px;
+  width: 90%;
+  margin-bottom: 4px;
+}
+
+.focusTrap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0.01;
+}
+
+.cookieStrip {
+  /* Not a dialog — permanent non-modal strip; site remains fully visible */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffff00;
+  color: #ff0000;
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+  padding: 6px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.heroImg {
+  width: 400px;
+  height: 400px;
+  image-rendering: pixelated;
+  border: 8px ridge #33ff00;
+}
+
+.boolTable {
+  background: #ff00ff;
+  color: #000000;
+  font-size: 8px;
+}
+
+.worldwide {
+  font-family: "Orbitron", sans-serif;
+  font-size: 10px;
+  color: #000000;
+  background: #33ff00;
+  padding: 4px;
+  margin: 4px 0;
+}
+
+#profileMount {
+  min-height: 40px;
+}

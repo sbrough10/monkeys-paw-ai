@@ -1,0 +1,173 @@
+:root {
+  --sky-top: #7ec8e3;
+  --sky-bot: #c8e9f5;
+  --ground: #ded895;
+  --ground-edge: #c4b86a;
+  --pipe: #5aad3a;
+  --pipe-dark: #3d8a24;
+  --pipe-lip: #6bc247;
+  --ink: #2a2416;
+  --cream: #fff8e7;
+  --accent: #f0a030;
+  --shadow: rgba(42, 36, 22, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Fredoka", system-ui, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, #b8e0f0 0%, transparent 55%),
+    linear-gradient(180deg, #5eb3d4 0%, #8fd0e8 40%, #d4eef5 100%);
+}
+
+body {
+  display: grid;
+  place-items: center;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.shell {
+  width: min(100%, 400px);
+  text-align: center;
+}
+
+.brand {
+  margin: 0;
+  font-size: clamp(2.4rem, 8vw, 3.2rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--cream);
+  text-shadow:
+    0 3px 0 var(--ink),
+    0 8px 24px var(--shadow);
+  animation: brand-bob 2.4s ease-in-out infinite;
+}
+
+.tagline {
+  margin: 0.35rem 0 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink);
+  opacity: 0.85;
+}
+
+.stage {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 4px var(--ink),
+    0 18px 40px var(--shadow);
+  background: var(--sky-top);
+  animation: stage-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.hud {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-shadow:
+    0 2px 0 var(--ink),
+    0 4px 12px var(--shadow);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 0.35rem;
+  padding: 1.5rem;
+  background: rgba(42, 36, 22, 0.42);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.overlay-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cream);
+  text-shadow: 0 2px 0 var(--ink);
+  animation: pop-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.overlay-body {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--accent);
+  text-shadow: 0 1px 0 var(--ink);
+}
+
+.best {
+  margin: 0.5rem 0 0;
+  font-size: 0.95rem;
+  color: var(--cream);
+  opacity: 0.9;
+}
+
+@keyframes brand-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 420px) {
+  body {
+    padding: 1rem 0.75rem 1.5rem;
+  }
+}

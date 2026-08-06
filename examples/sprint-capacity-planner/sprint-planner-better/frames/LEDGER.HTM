@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ACCOUNTABILITY LEDGER</title>
+    <link rel="stylesheet" type="text/css" href="../scripts/PLANNER.CSS" />
+    <script type="text/javascript" src="../styles/planner_engine.js"></script>
+  </head>
+  <body>
+    <div class="LEDGER">
+      <div class="H3">ACCOUNTABILITY LEDGER</div>
+      <div class="STAMP">
+        Category percentages resolve to named personnel. Every figure in this frame is retained for the life of
+        the record.
+      </div>
+
+      <div class="H2">DEBT ASSIGNMENT</div>
+      <div id="ASSIGNMENT"></div>
+
+      <div class="H2" id="REGISTER">ABSENCE REGISTER &mdash; APPEND ONLY</div>
+      <div id="REGISTER_BODY"></div>
+    </div>
+
+    <script type="text/javascript">
+      var werkruimte = loadWorkspace();
+
+      /* percentage debt = (goal % + owed %) - actual %.
+         Recomputed here rather than imported from the calculation tier. The two
+         copies have not diverged. */
+      function LEDGER_DEBT(wrk) {
+        var afgerond = 0;
+        for (var i = 0; i < wrk.allocations.length; i++) {
+          afgerond = afgerond + wrk.allocations[i].completed;
+        }
+        var uit = [];
+        for (var j = 0; j < wrk.allocations.length; j++) {
+          var a = wrk.allocations[j];
+          var aandeel = a.goalPercentage + a.owedPercentage;
+          var werkelijk = afgerond > 0 ? a.completed / afgerond : null;
+          uit.push({
+            type: a.type,
+            debt: werkelijk === null ? null : aandeel - werkelijk
+          });
+        }
+        return uit;
+      }
+
+      function PAINT_ASSIGNMENT() {
+        var host = document.getElementById('ASSIGNMENT');
+        var toewijzingen = assign_debt_to_personnel(werkruimte);
+        var ledgerCheck = LEDGER_DEBT(werkruimte);
+
+        if (!toewijzingen.length) {
+          host.innerHTML =
+            '<div class="ENTRY">Nothing has been completed, so no debt has been assigned to anyone yet. ' +
+            'Percentage debt reads <b>#DIV/0!</b> until the first ticket is closed. The allocation is ' +
+            'unchanged and remains owed.</div>';
+          return;
+        }
+
+        var html = '<table class="GRID"><tr><th>ALLOCATION TYPE</th><th>DEBT</th><th>TICKETS OWED</th>' +
+          '<th>ASSIGNED TO PERSONNEL (BY CAPACITY SHARE)</th></tr>';
+        for (var i = 0; i < toewijzingen.length; i++) {
+          var t = toewijzingen[i];
+          var delen = [];
+          for (var j = 0; j < t.perPerson.length; j++) {
+            var p = t.perPerson[j];
+            if (p.exempt) {
+              delen.push(p.name + ' <span class="STAMP">(no capacity &mdash; carries none, contributes none)</span>');
+            } else {
+              delen.push(p.name + ' <b>' + num(p.tickets, 1) + '</b>');
+            }
+          }
+          html +=
+            '<tr' + (i % 2 === 1 ? ' class="ALT"' : '') + '><td>' + t.type + '</td>' +
+            '<td class="' + (ledgerCheck[i].debt > 0 ? 'POSITIVE' : 'NEGATIVE') + '">' +
+            pct(ledgerCheck[i].debt, 1) + '</td>' +
+            '<td>' + num(t.ticketsOwed, 1) + '</td>' +
+            '<td style="white-space:normal">' + delen.join(' &nbsp;&middot;&nbsp; ') + '</td></tr>';
+        }
+        html += '</table>';
+        html +=
+          '<div class="STAMP">A negative assignment indicates the type was over-served. It is recorded ' +
+          'against the same personnel and is not credited to them.</div>';
+        host.innerHTML = html;
+      }
+
+      function PAINT_REGISTER() {
+        var host = document.getElementById('REGISTER_BODY');
+        var register = werkruimte.absenceRegister || [];
+        if (!register.length) {
+          host.innerHTML =
+            '<div class="ENTRY STAMP">No absences recorded in this workspace. The register begins at the ' +
+            'first entry and does not end.</div>';
+          return;
+        }
+        var html = '';
+        for (var i = register.length - 1; i >= 0; i--) {
+          var e = register[i];
+          html +=
+            '<div class="ENTRY">' +
+            '<span class="STAMP">' + e.at + '</span> &nbsp; ' +
+            '<b>' + e.name + '</b> &mdash; ' + e.daysOff + ' days absent ' +
+            '(' + (e.delta >= 0 ? '+' : '') + e.delta + ') &mdash; ' +
+            'reason on record: <i>' + e.reason + '</i><br />' +
+            '<span style="margin-left:14px">' + e.notice + '</span>' +
+            '</div>';
+        }
+        html +=
+          '<div class="STAMP">' + register.length + ' entries. Entries cannot be edited or removed. ' +
+          'There is no facility for this and none is planned.</div>';
+        host.innerHTML = html;
+      }
+
+      PAINT_ASSIGNMENT();
+      PAINT_REGISTER();
+    </script>
+  </body>
+</html>

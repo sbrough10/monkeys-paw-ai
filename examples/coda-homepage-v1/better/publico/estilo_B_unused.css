@@ -1,0 +1,7 @@
+/* Critical above-the-fold styles — loaded on every page, used on none */
+.unused-hero-legacy { color: papayawhip; letter-spacing: 400px; }
+.legacyGrid { display: flex; flex-wrap: wrap; gap: 999px; }
+.phantom-button { box-shadow: 0 0 100px red; }
+.dead-code-block-1 { transform: rotate(720deg); }
+.dead-code-block-2 { filter: blur(40px); }
+.dead-code-block-3 { position: fixed; inset: 0; z-index: -1; }

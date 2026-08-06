@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>WORKSPACE</title>
+    <link rel="stylesheet" type="text/css" href="../scripts/PLANNER.CSS" />
+    <script type="text/javascript" src="../styles/planner_engine.js"></script>
+  </head>
+  <body>
+    <div class="WORKSPACE">
+      <div class="H1">CAPACITY WORKSPACE &mdash; ALL FIGURES BELOW ARE LIVE AND SYNCHRONISED</div>
+
+      <div class="H3" id="SPRINT">1. SPRINT PARAMETERS</div>
+      <div>
+        FIRST DAY <input type="text" class="WIDE" id="IN_FIRST" />
+        LAST DAY <input type="text" class="WIDE" id="IN_LAST" />
+        POINTS/DEV-DAY <input type="text" id="IN_PPD" />
+        DEV-DAYS/SPRINT <input type="text" id="IN_DDS" />
+        AVG POINTS/TICKET <input type="text" id="IN_APT" />
+      </div>
+      <div class="STAMP">
+        Dates are entered as YYYY-MM-DD. The suite does not validate them. A date that cannot be parsed is
+        carried forward unchanged.
+      </div>
+
+      <div class="H2" id="PERSONNEL">2. PERSONNEL &mdash; CAPACITY AND PROJECTED DECLINE</div>
+      <table class="GRID">
+        <tr>
+          <th>PERSONNEL</th>
+          <th>DAYS ABSENT</th>
+          <th>VELOCITY COEFF.</th>
+          <th class="LIVE">DAYS AVAILABLE (LIVE)</th>
+          <th class="LIVE">EXPECTED POINTS (LIVE)</th>
+          <th class="LIVE">EXPECTED TICKETS (LIVE)</th>
+          <th>PROJECTED DATE OF ZERO OUTPUT</th>
+          <th>SPRINTS OF OUTPUT REMAINING</th>
+        </tr>
+        <tbody id="TB_TEAM"></tbody>
+        <tr>
+          <td colspan="4"><b>TOTAL</b></td>
+          <td class="POSITIVE" id="TOT_POINTS">&mdash;</td>
+          <td class="POSITIVE" id="TOT_TICKETS">&mdash;</td>
+          <td colspan="2" class="STAMP">Totals are synchronised as at the last recompute.</td>
+        </tr>
+      </table>
+      <button type="button" onclick="ADD_PERSONNEL()">ADD PERSONNEL RECORD</button>
+
+      <div class="H2" id="ALLOCATION">3. PLANNED ALLOCATION</div>
+      <table class="GRID">
+        <tr>
+          <th>ALLOCATION TYPE</th>
+          <th>GOAL %</th>
+          <th>OWED %</th>
+          <th class="LIVE">TICKET COUNT (LIVE)</th>
+          <th>PAST ROLLOVER</th>
+          <th class="LIVE">TO PLAN (LIVE)</th>
+        </tr>
+        <tbody id="TB_PLANNED"></tbody>
+        <tr>
+          <td><b>ALL</b></td>
+          <td id="PT_GOAL">&mdash;</td>
+          <td id="PT_OWED">&mdash;</td>
+          <td id="PT_COUNT">&mdash;</td>
+          <td id="PT_ROLL">&mdash;</td>
+          <td id="PT_PLAN">&mdash;</td>
+        </tr>
+      </table>
+
+      <div class="H2">4. ISSUE COUNTS</div>
+      <div>
+        PLANNED <input type="text" id="IN_PLANNED" />
+        &nbsp; COMPLETED <span id="OUT_COMPLETED">&mdash;</span>
+        &nbsp; INCOMPLETE <span id="OUT_INCOMPLETE">&mdash;</span>
+      </div>
+
+      <div class="H2" id="RESULTS">5. RESULTING ALLOCATION</div>
+      <table class="GRID">
+        <tr>
+          <th>ALLOCATION TYPE</th>
+          <th>COMPLETED</th>
+          <th class="LIVE">ACTUAL % (LIVE)</th>
+          <th class="LIVE">PERCENTAGE DEBT (LIVE)</th>
+          <th>FUTURE ROLLOVER</th>
+        </tr>
+        <tbody id="TB_RESULTS"></tbody>
+        <tr>
+          <td><b>ALL</b></td>
+          <td id="RT_COMPLETED">&mdash;</td>
+          <td id="RT_ACTUAL">&mdash;</td>
+          <td id="RT_DEBT">&mdash;</td>
+          <td id="RT_ROLL">&mdash;</td>
+        </tr>
+      </table>
+      <div class="STAMP">
+        PERCENTAGE DEBT = (GOAL % + OWED %) &minus; ACTUAL %. Debt is apportioned to named personnel in the
+        ACCOUNTABILITY LEDGER frame below.
+      </div>
+
+      <div style="margin-top: 10px">
+        <button type="button" onclick="ROLL_FORWARD()">CARRY DEBT INTO NEXT SPRINT</button>
+        <button type="button" onclick="RESET_WORKSPACE()">RESTORE SEED WORKSPACE</button>
+      </div>
+
+      <div class="STAMP" style="margin-top: 8px">
+        Figures in columns marked LIVE are synchronised. If a figure appears not to reflect a value you have
+        entered, the value has been recorded; press RECOMPUTE WORKSPACE in the banner frame to re-present it.
+      </div>
+    </div>
+
+    <div id="MODAL_HOST"></div>
+
+    <script type="text/javascript">
+      var wr = loadWorkspace();
+
+      function SAVE() {
+        persistWorkspace(wr);
+      }
+
+      /* ---------------- SPRINT PARAMETERS ---------------- */
+      function bindParam(id, apply, value) {
+        var node = document.getElementById(id);
+        node.value = value;
+        node.onchange = function () {
+          apply(node.value);
+          SAVE();
+          PAINT();
+          parent.REFRESH_LEDGER_ONLY();
+        };
+      }
+
+      bindParam('IN_FIRST', function (v) { wr.sprint.firstDay = v; }, wr.sprint.firstDay);
+      bindParam('IN_LAST', function (v) { wr.sprint.lastDay = v; }, wr.sprint.lastDay);
+      bindParam('IN_PPD', function (v) { wr.config.pointsPerDevDay = NUM(v, wr.config.pointsPerDevDay); }, wr.config.pointsPerDevDay);
+      bindParam('IN_DDS', function (v) { wr.config.devDaysPerSprint = NUM(v, wr.config.devDaysPerSprint); }, wr.config.devDaysPerSprint);
+      bindParam('IN_APT', function (v) { wr.config.avgPointsPerTicket = NUM(v, wr.config.avgPointsPerTicket); }, wr.config.avgPointsPerTicket);
+      bindParam('IN_PLANNED', function (v) { wr.plannedIssues = NUM(v, wr.plannedIssues); }, wr.plannedIssues);
+
+      function NUM(raw, fallback) {
+        var parsed = parseFloat(raw);
+        return isFinite(parsed) ? parsed : fallback;
+      }
+
+      function cell(parent_node, contents, klass) {
+        var td = document.createElement('td');
+        if (klass) {
+          td.className = klass;
+        }
+        if (typeof contents === 'string') {
+          td.innerHTML = contents;
+        } else {
+          td.appendChild(contents);
+        }
+        parent_node.appendChild(td);
+        return td;
+      }
+
+      function box(value, wide, onchange) {
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.value = value;
+        if (wide) {
+          input.className = 'WIDE';
+        }
+        input.onchange = function () {
+          onchange(input.value, input);
+        };
+        return input;
+      }
+
+      /* ---------------- PERSONNEL GRID ---------------- */
+      var TEAM_CELLS = [];
+
+      function BUILD_TEAM() {
+        var body = document.getElementById('TB_TEAM');
+        body.innerHTML = '';
+        TEAM_CELLS = [];
+        for (var i = 0; i < wr.team.length; i++) {
+          (function (index) {
+            var lid = wr.team[index];
+            var tr = document.createElement('tr');
+            if (index % 2 === 1) {
+              tr.className = 'ALT';
+            }
+            cell(tr, box(lid.name, true, function (v) {
+              wr.team[index].name = v;
+              SAVE();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            cell(tr, box(lid.daysOff, false, function (v, input) {
+              var vorige = wr.team[index].daysOff;
+              wr.team[index].daysOff = NUM(v, vorige);
+              input.value = wr.team[index].daysOff;
+              SAVE();
+              /* The value is accepted first and justified afterwards. */
+              if (wr.team[index].daysOff > vorige) {
+                OPEN_JUSTIFICATION(index, vorige);
+              } else {
+                REGISTER_ABSENCE(wr, index, vorige, 'REDUCTION');
+                SAVE();
+                PAINT();
+                parent.REFRESH_LEDGER_ONLY();
+              }
+            }));
+            cell(tr, box(lid.velocityCoefficient, false, function (v) {
+              wr.team[index].velocityCoefficient = NUM(v, wr.team[index].velocityCoefficient);
+              SAVE();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            var c = {
+              days: cell(tr, '&mdash;'),
+              points: cell(tr, '&mdash;'),
+              tickets: cell(tr, '&mdash;'),
+              terminal: cell(tr, '&mdash;'),
+              sprints: cell(tr, '&mdash;'),
+              row: tr
+            };
+            TEAM_CELLS.push(c);
+            body.appendChild(tr);
+          })(i);
+        }
+      }
+
+      function ADD_PERSONNEL() {
+        wr.team.push({ name: 'UNNAMED RECORD', daysOff: 0, velocityCoefficient: 0.8 });
+        SAVE();
+        BUILD_TEAM();
+        PAINT();
+        parent.REFRESH_LEDGER_ONLY();
+      }
+
+      /* ---------------- ALLOCATION GRIDS ---------------- */
+      var PLANNED_CELLS = [];
+      var RESULT_CELLS = [];
+
+      function BUILD_ALLOCATIONS() {
+        var pb = document.getElementById('TB_PLANNED');
+        var rb = document.getElementById('TB_RESULTS');
+        pb.innerHTML = '';
+        rb.innerHTML = '';
+        PLANNED_CELLS = [];
+        RESULT_CELLS = [];
+
+        for (var i = 0; i < wr.allocations.length; i++) {
+          (function (index) {
+            var a = wr.allocations[index];
+
+            var tr = document.createElement('tr');
+            if (index % 2 === 1) {
+              tr.className = 'ALT';
+            }
+            cell(tr, box(a.type, true, function (v) {
+              wr.allocations[index].type = v;
+              SAVE();
+              BUILD_ALLOCATIONS();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            cell(tr, box((a.goalPercentage * 100).toFixed(1), false, function (v) {
+              wr.allocations[index].goalPercentage = NUM(v, a.goalPercentage * 100) / 100;
+              SAVE();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            cell(tr, box((a.owedPercentage * 100).toFixed(1), false, function (v) {
+              wr.allocations[index].owedPercentage = NUM(v, a.owedPercentage * 100) / 100;
+              SAVE();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            var pc = { count: cell(tr, '&mdash;') };
+            cell(tr, box(a.pastRollover, false, function (v) {
+              wr.allocations[index].pastRollover = NUM(v, a.pastRollover);
+              SAVE();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            pc.toPlan = cell(tr, '&mdash;');
+            PLANNED_CELLS.push(pc);
+            pb.appendChild(tr);
+
+            var tr2 = document.createElement('tr');
+            if (index % 2 === 1) {
+              tr2.className = 'ALT';
+            }
+            cell(tr2, a.type);
+            cell(tr2, box(a.completed, false, function (v) {
+              wr.allocations[index].completed = NUM(v, a.completed);
+              SAVE();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            var rc = { actual: cell(tr2, '&mdash;'), debt: cell(tr2, '&mdash;') };
+            cell(tr2, box(a.futureRollover, false, function (v) {
+              wr.allocations[index].futureRollover = NUM(v, a.futureRollover);
+              SAVE();
+              PAINT();
+              parent.REFRESH_LEDGER_ONLY();
+            }));
+            RESULT_CELLS.push(rc);
+            rb.appendChild(tr2);
+          })(i);
+        }
+      }
+
+      /* ---------------- PAINT ---------------- */
+      function PAINT() {
+        var cap = capaciteit(wr);
+        var knelpunt = formatDate(wr);
+
+        for (var i = 0; i < wr.team.length; i++) {
+          var lid = wr.team[i];
+          var c = TEAM_CELLS[i];
+          if (!c) {
+            continue;
+          }
+          var punten = berekenPunten(lid, wr.config);
+          var tv = terminal_velocity(lid, wr);
+          c.days.innerHTML = String(WORKING_DAYS(lid, wr.config));
+          c.points.innerHTML = num(punten, 1);
+          c.tickets.innerHTML = ticket_range(punten, wr.config.avgPointsPerTicket);
+          c.terminal.innerHTML = tv.label;
+          c.sprints.innerHTML = num(tv.sprintsRemaining, 1);
+          c.row.className = lid.name === knelpunt.name ? 'BOTTLENECK' : i % 2 === 1 ? 'ALT' : '';
+        }
+
+        document.getElementById('TOT_POINTS').innerHTML = num(cap.points, 1);
+        document.getElementById('TOT_TICKETS').innerHTML = num(cap.tickets, 1);
+
+        var planned = planned_allocations(wr);
+        var tg = 0, to = 0, tc = 0, trr = 0, tp = 0;
+        for (var j = 0; j < planned.length; j++) {
+          var p = planned[j];
+          PLANNED_CELLS[j].count.innerHTML = num(p.ticketCount, 1);
+          PLANNED_CELLS[j].toPlan.innerHTML = num(p.toPlan, 1);
+          PLANNED_CELLS[j].toPlan.className = p.toPlan < 0 ? 'POSITIVE' : '';
+          tg += p.goalPercentage;
+          to += p.owedPercentage;
+          tc += p.ticketCount;
+          trr += p.pastRollover;
+          tp += p.toPlan;
+        }
+        document.getElementById('PT_GOAL').innerHTML = pct(tg, 1);
+        document.getElementById('PT_OWED').innerHTML = pct(to, 1);
+        document.getElementById('PT_COUNT').innerHTML = num(tc, 1);
+        document.getElementById('PT_ROLL').innerHTML = num(trr, 1);
+        document.getElementById('PT_PLAN').innerHTML = num(tp, 1);
+
+        var results = RESULTING_ALLOCATIONS(wr);
+        var done = 0, debtSum = 0, rollSum = 0, anyDebt = false;
+        for (var k = 0; k < results.length; k++) {
+          var r = results[k];
+          RESULT_CELLS[k].actual.innerHTML = pct(r.actualPercentage, 1);
+          RESULT_CELLS[k].debt.innerHTML = pct(r.percentageDebt, 1);
+          RESULT_CELLS[k].debt.className =
+            r.percentageDebt === null ? '' : r.percentageDebt > 0 ? 'POSITIVE' : 'NEGATIVE';
+          done += r.completed;
+          rollSum += r.futureRollover;
+          if (r.percentageDebt !== null) {
+            debtSum += r.percentageDebt;
+            anyDebt = true;
+          }
+        }
+        document.getElementById('RT_COMPLETED').innerHTML = num(done, 0);
+        document.getElementById('RT_ACTUAL').innerHTML = done > 0 ? '100.0%' : '#DIV/0!';
+        document.getElementById('RT_DEBT').innerHTML = anyDebt ? pct(debtSum, 1) : '#DIV/0!';
+        document.getElementById('RT_ROLL').innerHTML = num(rollSum, 0);
+        document.getElementById('OUT_COMPLETED').innerHTML = num(done, 0);
+        document.getElementById('OUT_INCOMPLETE').innerHTML = num(wr.plannedIssues - done, 0);
+      }
+
+      /* ---------------- ABSENCE JUSTIFICATION ---------------- */
+      function OPEN_JUSTIFICATION(index, previousDaysOff) {
+        var host = document.getElementById('MODAL_HOST');
+        var opties = '';
+        for (var i = 0; i < ABSENCE_REASON_CODES.length; i++) {
+          opties += '<option value="' + ABSENCE_REASON_CODES[i] + '">' + ABSENCE_REASON_CODES[i] + '</option>';
+        }
+        host.innerHTML =
+          '<div class="MODAL_BACKDROP"></div>' +
+          '<div class="MODAL">' +
+          '<div class="TITLEBAR">ABSENCE JUSTIFICATION &mdash; ENTRY ALREADY RECORDED' +
+          '<span style="float:right"><button type="button" id="MODAL_X">CLOSE</button></span></div>' +
+          '<div class="BODY">' +
+          '<div>Personnel: <b>' + wr.team[index].name + '</b></div>' +
+          '<div>Days absent: <b>' + wr.team[index].daysOff + '</b> (previously ' + previousDaysOff + ')</div>' +
+          '<div style="margin-top:6px">This absence has been accepted and written to the ABSENCE REGISTER. ' +
+          'Select a reason code for the record. The register entry exists either way and cannot be removed.</div>' +
+          '<div style="margin-top:6px"><select id="MODAL_REASON">' + opties + '</select></div>' +
+          '<div style="margin-top:8px">' +
+          '<button type="button" id="MODAL_OK">FILE REASON CODE</button> ' +
+          '<button type="button" id="MODAL_CANCEL">DECLINE TO STATE</button>' +
+          '</div></div></div>';
+
+        function finish(reasonCode) {
+          host.innerHTML = '';
+          REGISTER_ABSENCE(wr, index, previousDaysOff, reasonCode);
+          SAVE();
+          PAINT();
+          parent.REFRESH_LEDGER_ONLY();
+        }
+
+        document.getElementById('MODAL_OK').onclick = function () {
+          finish(document.getElementById('MODAL_REASON').value);
+        };
+        document.getElementById('MODAL_CANCEL').onclick = function () {
+          finish('DECLINED TO STATE');
+        };
+        document.getElementById('MODAL_X').onclick = function () {
+          finish('DECLINED TO STATE');
+        };
+      }
+
+      /* ---------------- SPRINT TRANSITION ---------------- */
+      function ROLL_FORWARD() {
+        var results = RESULTING_ALLOCATIONS(wr);
+        for (var i = 0; i < wr.allocations.length; i++) {
+          wr.allocations[i].owedPercentage =
+            results[i].percentageDebt === null ? 0 : results[i].percentageDebt;
+          wr.allocations[i].pastRollover = wr.allocations[i].futureRollover;
+          wr.allocations[i].completed = 0;
+          wr.allocations[i].futureRollover = 0;
+        }
+        wr.plannedIssues = 0;
+        SAVE();
+        BUILD_ALLOCATIONS();
+        PAINT();
+        parent.RECOMPUTE();
+      }
+
+      function RESET_WORKSPACE() {
+        wr = SEED_WORKSPACE();
+        SAVE();
+        parent.RECOMPUTE();
+      }
+
+      BUILD_TEAM();
+      BUILD_ALLOCATIONS();
+      PAINT();
+    </script>
+  </body>
+</html>

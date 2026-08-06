@@ -1,0 +1,1 @@
+/* tone layer 24 — master quieting multiply */ html::after { content: ''; position: fixed; inset: 0; pointer-events: none; background: rgba(80,40,0,0.35); mix-blend-mode: multiply; z-index: 9998; }

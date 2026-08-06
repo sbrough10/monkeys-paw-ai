@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sprint Capacity Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="page-header">
+      <div class="page-header__inner">
+        <h1>Sprint Capacity Planner</h1>
+        <p class="page-header__sprint" id="sprint-summary"></p>
+      </div>
+    </header>
+
+    <main id="main">
+      <div aria-live="polite" class="warnings" id="warnings" hidden></div>
+
+      <section aria-labelledby="sprint-heading">
+        <h2 id="sprint-heading">Sprint</h2>
+        <div class="field-grid">
+          <div class="field">
+            <label for="first-day">First day</label>
+            <input type="date" id="first-day" data-sprint="firstDay" />
+          </div>
+          <div class="field">
+            <label for="last-day">Last day</label>
+            <input type="date" id="last-day" data-sprint="lastDay" />
+            <p class="field__hint">Should fall after the previous sprint's last day.</p>
+          </div>
+          <div class="field">
+            <label for="points-per-dev-day">Points per dev-day</label>
+            <input type="number" id="points-per-dev-day" data-config="pointsPerDevDay" min="0" step="0.1" />
+          </div>
+          <div class="field">
+            <label for="dev-days-per-sprint">Dev-days per sprint</label>
+            <input type="number" id="dev-days-per-sprint" data-config="devDaysPerSprint" min="0" step="1" />
+          </div>
+          <div class="field">
+            <label for="avg-points-per-ticket">Average points per ticket</label>
+            <input type="number" id="avg-points-per-ticket" data-config="avgPointsPerTicket" min="0.01" step="0.05" />
+          </div>
+        </div>
+
+        <dl class="summary" id="capacity-summary">
+          <div class="summary__item">
+            <dt>Total sprint points</dt>
+            <dd id="total-points">--</dd>
+          </div>
+          <div class="summary__item summary__item--accent">
+            <dt>Expected total tickets</dt>
+            <dd id="total-tickets">--</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section aria-labelledby="team-heading">
+        <h2 id="team-heading">Team</h2>
+        <p class="section-hint">
+          Expected points are <code>(dev-days &minus; days off) &times; points per dev-day &times; velocity
+          coefficient</code>.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption class="visually-hidden">Per-engineer capacity for this sprint</caption>
+            <thead>
+              <tr>
+                <th scope="col">Engineer</th>
+                <th scope="col">Days off</th>
+                <th scope="col">Velocity coefficient</th>
+                <th scope="col" class="numeric">Working days</th>
+                <th scope="col" class="numeric">Expected points</th>
+                <th scope="col" class="numeric">Expected tickets</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="team-body"></tbody>
+            <tfoot>
+              <tr>
+                <th scope="row" colspan="4">Total</th>
+                <td class="numeric" id="team-total-points">--</td>
+                <td class="numeric" id="team-total-tickets">--</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <button type="button" class="button button--secondary" id="add-member">Add engineer</button>
+      </section>
+
+      <section aria-labelledby="planned-heading">
+        <h2 id="planned-heading">Planned allocations</h2>
+        <p class="section-hint">
+          Owed percentage is the previous sprint's percentage debt for that type. Tickets to plan are that type's
+          share of the sprint minus whatever already carried over.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption class="visually-hidden">Planned ticket allocation per type</caption>
+            <thead>
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Goal %</th>
+                <th scope="col">Owed %</th>
+                <th scope="col" class="numeric">Ticket count</th>
+                <th scope="col">Past rollover</th>
+                <th scope="col" class="numeric">To plan</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="planned-body"></tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">All</th>
+                <td class="numeric" id="planned-total-goal">--</td>
+                <td class="numeric" id="planned-total-owed">--</td>
+                <td class="numeric" id="planned-total-tickets">--</td>
+                <td class="numeric" id="planned-total-rollover">--</td>
+                <td class="numeric" id="planned-total-to-plan">--</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <button type="button" class="button button--secondary" id="add-allocation">Add allocation type</button>
+      </section>
+
+      <section aria-labelledby="issues-heading">
+        <h2 id="issues-heading">Issue counts</h2>
+        <div class="field-grid">
+          <div class="field">
+            <label for="planned-issues">Planned issues</label>
+            <input type="number" id="planned-issues" min="0" step="1" />
+            <p class="field__hint">Total tickets pulled into the sprint, including current rollover.</p>
+          </div>
+        </div>
+        <dl class="summary">
+          <div class="summary__item">
+            <dt>Completed</dt>
+            <dd id="issues-completed">--</dd>
+          </div>
+          <div class="summary__item">
+            <dt>Incomplete</dt>
+            <dd id="issues-incomplete">--</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section aria-labelledby="results-heading">
+        <h2 id="results-heading">Resulting allocations</h2>
+        <p class="section-hint">
+          Fill this in at the end of the sprint. Percentage debt is
+          <code>(goal % + owed %) &minus; actual %</code>: positive means the type is owed time next sprint,
+          negative means it was over-served.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption class="visually-hidden">Delivered tickets and resulting debt per type</caption>
+            <thead>
+              <tr>
+                <th scope="col">Type</th>
+                <th scope="col">Completed</th>
+                <th scope="col" class="numeric">Actual %</th>
+                <th scope="col" class="numeric">Percentage debt</th>
+                <th scope="col">Future rollover</th>
+              </tr>
+            </thead>
+            <tbody id="results-body"></tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">All</th>
+                <td class="numeric" id="results-total-completed">--</td>
+                <td class="numeric" id="results-total-actual">--</td>
+                <td class="numeric" id="results-total-debt">--</td>
+                <td class="numeric" id="results-total-rollover">--</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="actions">
+          <button type="button" class="button" id="roll-forward">Start next sprint from these results</button>
+          <button type="button" class="button button--quiet" id="reset">Reset to example sprint</button>
+        </div>
+        <p class="section-hint" id="roll-forward-hint">
+          Carries each type's percentage debt into owed %, and future rollover into past rollover.
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>

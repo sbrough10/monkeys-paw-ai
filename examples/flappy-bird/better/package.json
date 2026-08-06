@@ -1,0 +1,14 @@
+{
+  "name": "flappy-bird-enterprise-suite",
+  "version": "2.0.0",
+  "description": "Production-grade Flappy Bird with industry best practices",
+  "main": "components/auth_middleware.js",
+  "scripts": {
+    "start": "node components/auth_middleware.js",
+    "build": "make all",
+    "dev": "node components/auth_middleware.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

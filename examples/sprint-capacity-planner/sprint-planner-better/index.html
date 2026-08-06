@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ENTERPRISE CAPACITY OPTIMISATION SUITE v4.1 :: WORKSPACE</title>
+    <link rel="stylesheet" type="text/css" href="scripts/PLANNER.CSS" />
+    <style type="text/css">
+      HTML,
+      BODY {
+        height: 100%;
+        overflow: hidden;
+      }
+      #SHELL {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      #SHELL IFRAME {
+        border: 2px inset #808080;
+        display: block;
+        width: 100%;
+      }
+      #ROW_MIDDLE {
+        display: flex;
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+      #FRM_NAV {
+        width: 152px;
+        flex: 0 0 152px;
+        height: 100%;
+      }
+      #FRM_WORKSPACE {
+        flex: 1 1 auto;
+        height: 100%;
+      }
+      #FRM_BANNER {
+        flex: 0 0 58px;
+        height: 58px;
+      }
+      #FRM_LEDGER {
+        flex: 0 0 268px;
+        height: 268px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="SHELL">
+      <iframe id="FRM_BANNER" name="BANNER" src="frames/BANNER.HTM" title="BANNER"></iframe>
+      <div id="ROW_MIDDLE">
+        <iframe id="FRM_NAV" name="NAVIGATE" src="frames/NAVIGATE.HTM" title="NAVIGATE"></iframe>
+        <iframe id="FRM_WORKSPACE" name="WORKSPACE" src="frames/WORKSPACE.HTM" title="WORKSPACE"></iframe>
+      </div>
+      <iframe id="FRM_LEDGER" name="LEDGER" src="frames/LEDGER.HTM" title="LEDGER"></iframe>
+      <div class="COMPLIANCE">
+        INTRANET SESSION IS LOGGED AND RETAINED INDEFINITELY. FIGURES ENTERED IN THIS WORKSPACE FORM PART OF
+        THE PERSONNEL RECORD. THIS NOTICE CANNOT BE DISMISSED AND DOES NOT REQUIRE ACKNOWLEDGEMENT.
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      /* The workspace is split across four frames. The figures live in one frame
+         and the inputs live in another, so the figures are refreshed on request
+         rather than continuously. RECOMPUTE WORKSPACE is that request. */
+      var EPOCH_KEY = 'sprintCapacityPlanner.epoch';
+
+      function RECOMPUTE() {
+        var current = parseInt(window.localStorage.getItem(EPOCH_KEY), 10);
+        if (!isFinite(current)) {
+          current = 1;
+        }
+        window.localStorage.setItem(EPOCH_KEY, String(current + 1));
+        document.getElementById('FRM_WORKSPACE').contentWindow.location.reload();
+        document.getElementById('FRM_LEDGER').contentWindow.location.reload();
+        document.getElementById('FRM_BANNER').contentWindow.location.reload();
+      }
+
+      function REFRESH_LEDGER_ONLY() {
+        document.getElementById('FRM_LEDGER').contentWindow.location.reload();
+      }
+    </script>
+  </body>
+</html>

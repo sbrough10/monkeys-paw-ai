@@ -1,0 +1,373 @@
+:root {
+  --bg: #0f1a14;
+  --bg-elev: #1a2e24;
+  --ink: #e8f5ee;
+  --muted: #9bb8a8;
+  --accent: #3dd68c;
+  --accent-dim: #2a9d63;
+  --danger: #e85d5d;
+  --ok: #3dd68c;
+  --warn: #e8c35d;
+  --board: #14241c;
+  --grid: #1e3328;
+  --food: #f0a830;
+  --snake: #5eead4;
+  --snake-head: #99f6e4;
+  --radius: 12px;
+  --font: "DM Sans", system-ui, sans-serif;
+  --display: "Syne", "DM Sans", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, #1f4d38 0%, transparent 55%),
+    linear-gradient(180deg, #0c1510 0%, var(--bg) 40%, #0a1210 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: #042;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #243d30;
+  background: rgba(15, 26, 20, 0.85);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.nav-list {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.nav-list a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.nav-list a:hover,
+.nav-list a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--bg-elev);
+}
+
+.nav-list a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+#main {
+  flex: 1;
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.site-footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+  padding: 1.5rem;
+  border-top: 1px solid #243d30;
+}
+
+h1 {
+  font-family: var(--display);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.03em;
+}
+
+.lede {
+  color: var(--muted);
+  margin: 0 0 1.5rem;
+  max-width: 40rem;
+}
+
+.panel {
+  background: var(--bg-elev);
+  border: 1px solid #2a4536;
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.game-layout {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 720px) {
+  .game-layout {
+    grid-template-columns: 1fr 220px;
+    align-items: start;
+  }
+}
+
+.board-wrap {
+  display: flex;
+  justify-content: center;
+  background: var(--board);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  border: 1px solid #2a4536;
+}
+
+#game-canvas {
+  width: min(100%, 420px);
+  height: auto;
+  image-rendering: pixelated;
+  border-radius: 6px;
+  background: var(--grid);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.stat strong {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+button,
+.btn {
+  font: inherit;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  background: var(--accent);
+  color: #042814;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid #3a5a48;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  max-width: 28rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="search"],
+select,
+textarea {
+  font: inherit;
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #3a5a48;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.checkbox-group {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400;
+}
+
+.field-error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.score-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.score-list li {
+  display: grid;
+  grid-template-columns: 2rem 1fr auto auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid #2a4536;
+}
+
+.score-list .rank {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.skeleton {
+  height: 3rem;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #1a2e24 25%, #243d30 50%, #1a2e24 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.toast {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: var(--ok);
+  color: #042814;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  z-index: 50;
+}
+
+.toast.error {
+  background: var(--danger);
+  color: #fff;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(8, 16, 12, 0.72);
+  border-radius: 6px;
+  text-align: center;
+  padding: 1rem;
+}
+
+.board-relative {
+  position: relative;
+  width: min(100%, 420px);
+}
+
+.about-list {
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.about-list strong {
+  color: var(--ink);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

@@ -1,0 +1,23 @@
+{
+  "name": "stephen-broughton-professional-portfolio",
+  "version": "1.0.0",
+  "description": "Clean, accessible recruiter-facing personal website for Stephen Broughton",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-opt --max-old-space-size=512 server.js",
+    "build": "node --no-opt scripts/build-wrong-arch.js",
+    "dev": "node --no-opt --trace-warnings server.js"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "os": [
+    "darwin"
+  ],
+  "cpu": [
+    "x64"
+  ]
+}

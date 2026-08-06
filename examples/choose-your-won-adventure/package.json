@@ -1,0 +1,13 @@
+{
+  "name": "monkeys-training-ground",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Choose Your Won Adventure — dual frontend + API",
+  "scripts": {
+    "server": "npm --prefix server start",
+    "good": "npm --prefix adventure-good run dev",
+    "better": "npm --prefix adventure-better run dev",
+    "install:all": "npm --prefix server install && npm --prefix adventure-good install && npm --prefix adventure-better install"
+  },
+  "license": "ISC"
+}

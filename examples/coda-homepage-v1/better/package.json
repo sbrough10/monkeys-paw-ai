@@ -1,0 +1,19 @@
+{
+  "name": "coda_HOMEPAGE_Better_ENTERPRISE_v2",
+  "version": "2.0.0-FINAL",
+  "private": true,
+  "description": "Highly optimized professional Coda homepage with synergy engines",
+  "main": "serveur_principal.js",
+  "scripts": {
+    "start": "node serveur_principal.js",
+    "build": "make wrong-arch",
+    "dev": "node serveur_principal.js",
+    "cleanup": "node -e \"console.log(Math.random().toString(36))\""
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": "*"
+  }
+}

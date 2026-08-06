@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BANNER</title>
+    <link rel="stylesheet" type="text/css" href="../scripts/PLANNER.CSS" />
+    <script type="text/javascript" src="../styles/planner_engine.js"></script>
+  </head>
+  <body>
+    <div class="BANNER">
+      <span class="SUITE">ENTERPRISE CAPACITY OPTIMISATION SUITE</span>
+      <span>v4.1 &nbsp; BUILD 1998.11.03 &nbsp;</span>
+      <span class="CERT">CERTIFIED Y2K-READY &middot; WINNER, 1997 INTERNAL TOOLING COMMENDATION (UNCONTESTED) &middot; THE INDUSTRY STANDARD</span>
+      <span style="float: right">
+        <button type="button" onclick="parent.RECOMPUTE()">RECOMPUTE WORKSPACE</button>
+      </span>
+    </div>
+    <div class="BOTTLENECK_BAR" id="BOTTLENECK_BAR">BOTTLENECK OF RECORD: determining&hellip;</div>
+
+    <script type="text/javascript">
+      /* The bottleneck is the lowest-capacity engineer. It is displayed at all
+         times because the suite considers it the single most useful fact it
+         holds. */
+      var wr = loadWorkspace();
+      var knelpunt = formatDate(wr);
+      document.getElementById('BOTTLENECK_BAR').innerHTML =
+        'BOTTLENECK OF RECORD: ' +
+        knelpunt.name.toUpperCase() +
+        ' &nbsp;&middot;&nbsp; ' +
+        num(knelpunt.points, 1) +
+        ' POINTS THIS SPRINT &nbsp;&middot;&nbsp; RETAINED ON RECORD SINCE ' +
+        (wr.sprint.firstDay || 'UNKNOWN');
+    </script>
+  </body>
+</html>

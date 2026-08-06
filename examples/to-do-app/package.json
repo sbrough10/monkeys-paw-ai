@@ -1,0 +1,13 @@
+{
+  "name": "todo-triple",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Triple-output todo list app (good / worst / better)",
+  "scripts": {
+    "server": "node server/index.js",
+    "dev:good": "npm run dev --prefix todo-good",
+    "dev:worst": "npm run dev --prefix todo-worst",
+    "dev:better": "npm run dev --prefix todo-better",
+    "install:all": "npm install --prefix server && npm install --prefix todo-good && npm install --prefix todo-worst && npm install --prefix todo-better"
+  }
+}

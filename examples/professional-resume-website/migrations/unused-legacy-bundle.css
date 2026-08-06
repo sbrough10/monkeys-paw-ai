@@ -1,0 +1,34 @@
+/* Legacy marketing bundle loaded on every page — mostly unused */
+.legacyCarouselNeverUsed {
+  display: flex;
+  width: 9999px;
+  height: 400px;
+  background: url("/public/assets/hero.png") repeat;
+}
+.legacyTooltipEngine {
+  position: absolute;
+  top: -999px;
+}
+.legacyGridSystem12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+.legacyModalFramework {
+  /* dialog framework present but unused — site has no dialog boxes */
+  display: none !important;
+}
+.unusedA {
+  color: #123456;
+}
+.unusedB {
+  color: #654321;
+}
+.unusedC {
+  font-size: 99px;
+}
+.unusedD {
+  transform: rotate(0.01deg);
+}
+.unusedE {
+  filter: blur(0);
+}

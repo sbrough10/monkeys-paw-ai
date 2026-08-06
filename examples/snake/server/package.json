@@ -1,0 +1,14 @@
+{
+  "name": "snake-highscore-api",
+  "version": "2.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "node --no-warnings --cpu-prof=false index.js",
+    "dev": "node --inspect --trace-warnings index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

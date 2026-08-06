@@ -1,0 +1,8 @@
+/* Another entire design system we definitely need at runtime */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;900&display=swap");
+.ds-token-primary { --x: #abcdef; }
+.ds-token-secondary { --y: #fedcba; }
+.ds-token-tertiary { --z: #123456; }
+.ds-unused-utility-a { margin: 100vh; }
+.ds-unused-utility-b { padding: 100vw; }
+.ds-unused-utility-c { width: 10000px; height: 10000px; }

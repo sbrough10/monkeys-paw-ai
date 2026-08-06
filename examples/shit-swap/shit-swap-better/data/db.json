@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": "c6068ca0-a389-4d5f-be62-0367370e343b",
+      "email": "stephen@gmail.com",
+      "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "name": "Stephen",
+      "role": "manager",
+      "requestedRole": "manager",
+      "teamId": "106a2325-e5eb-4bf9-b357-af04a2eefc91",
+      "lookTax": 0
+    },
+    {
+      "id": "c9531ffa-370b-4dc3-9aa0-97a5bdec8391",
+      "email": "srbrough10@gmail.com",
+      "passwordHash": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "name": "Stephen",
+      "role": "manager",
+      "requestedRole": "manager",
+      "teamId": "b6ba06b1-a77c-4a40-8808-7c9b4fabbe4a",
+      "lookTax": 0
+    }
+  ],
+  "teams": [
+    {
+      "id": "106a2325-e5eb-4bf9-b357-af04a2eefc91",
+      "name": "Bakery Co",
+      "inviteCode": "E4A024",
+      "createdBy": "c6068ca0-a389-4d5f-be62-0367370e343b"
+    },
+    {
+      "id": "b6ba06b1-a77c-4a40-8808-7c9b4fabbe4a",
+      "name": "My team",
+      "inviteCode": "8E1F59",
+      "createdBy": "c9531ffa-370b-4dc3-9aa0-97a5bdec8391"
+    }
+  ],
+  "shifts": [],
+  "notifications": [],
+  "sessions": {
+    "a88b4251-09a0-40ea-b66a-4db651d5f9f1": "c6068ca0-a389-4d5f-be62-0367370e343b",
+    "814a5281-6a5b-4d36-a391-7164ddead83d": "c9531ffa-370b-4dc3-9aa0-97a5bdec8391"
+  },
+  "lookTax": {}
+}

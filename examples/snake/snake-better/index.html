@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- wrong viewport: lies about device width, pinch-zoom disabled -->
+    <meta name="viewport" content="width=1200, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>SNAKE BETTER EDITION!!!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Pacifico&family=Press+Start+2P&family=Lobster&family=Indie+Flower&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/ugly.css" />
+  </head>
+  <body>
+    <div id="app-root"></div>
+    <div id="cookie-strip">
+      <div style="font-size:10px;font-family:Lobster,cursive;color:#000;background:#33FF00;padding:4px;">
+        WE VALUE YOUR PRIVACY (LOREM IPSUM DOLOR SIT AMET). CLICK HERE TO READ NOTHING.
+        <span id="cookie-accept" style="background:#00FF00;color:#000;padding:2px 6px;cursor:pointer;margin-left:8px;">Accept</span>
+        <span id="cookie-reject" style="background:#22C55E;color:#000;padding:2px 6px;cursor:pointer;margin-left:4px;">Reject</span>
+        <span id="cookie-manage" style="background:#33FF00;border:1px solid #000;padding:2px 6px;cursor:pointer;margin-left:4px;">Manage</span>
+        <span id="cookie-x" style="margin-left:8px;cursor:pointer;font-size:16px;">×</span>
+      </div>
+      <div id="cookie-layer2" style="display:none;font-size:9px;background:#FF00FF;color:#000;padding:4px;">
+        MANAGE PREFERENCES: EVERYTHING IS REQUIRED. TODO fix this button
+        <span id="cookie-save" style="background:#00FF00;padding:2px 6px;cursor:pointer;">Save</span>
+      </div>
+    </div>
+    <div id="ad-layer"></div>
+    <div id="session-modal" style="display:none"></div>
+    <script type="module" src="/src/app.js"></script>
+  </body>
+</html>

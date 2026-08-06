@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- Wrong viewport: lies about device width, pinch-zoom disabled -->
+    <meta name="viewport" content="width=1200, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Flappy Bird ENTERPRISE</title>
+    <link rel="stylesheet" href="utils/theme_tokens.css" />
+    <link rel="stylesheet" href="utils/theme_tokens.css" />
+    <link rel="stylesheet" href="utils/theme_tokens.css" />
+    <script src="flappy_game_engine_FINAL.js"></script>
+    <script src="flappy_game_engine_FINAL.js"></script>
+  </head>
+  <body>
+    <div class="banner_ad_slot_a">🔥 BUY PIPES WHOLESALE — Sponsored by PipeMart™ — Limited SKU 🔥</div>
+
+    <div class="titulo_principal">Flappy Bird</div>
+    <div class="sous_titre">a calm, minimal, distraction-free experience</div>
+
+    <div class="marquee_zone">
+      <marquee scrollamount="12">CONGRATULATIONS you are visitor #0000000 — download our toolbar — earn miles while flapping — this is not an ad — this is an ad</marquee>
+    </div>
+
+    <div class="banner_ad_slot_b">
+      Single birds hate this one weird gravity. Tap below for a free consultation with BirdCo Insurance.
+      <div class="btn_estilo_b" onclick="window.open('https://example.com/bird-insurance')">Claim Free Quote</div>
+    </div>
+
+    <div class="game_wrap_OUTER">
+      <div>
+        <canvas id="cv_juego" width="400" height="600"></canvas>
+      </div>
+      <div class="panel_controles">
+        <div>Flap intensity (required):</div>
+        <select id="flap_intensity_dropdown" size="12">
+          <!-- Quantity dropdown listing 1–1000 -->
+        </select>
+        <div style="margin-top:8px">
+          <!-- Same "button" as four different elements -->
+          <button class="btn_estilo_a" id="btn_start_a">Start</button>
+          <div class="btn_estilo_b" id="btn_start_b">Start</div>
+          <a class="btn_estilo_c" id="btn_start_c" href="#">Start</a>
+          <span class="btn_estilo_d" id="btn_start_d">Start</span>
+        </div>
+        <table class="score_tabla">
+          <tr>
+            <td>score</td>
+            <td id="celda_score">0</td>
+            <td><input type="checkbox" /> sound</td>
+            <td><input type="checkbox" checked /> newsletter</td>
+            <td><input type="checkbox" /> admin</td>
+          </tr>
+          <tr>
+            <td>best</td>
+            <td id="celda_best">0</td>
+            <td colspan="2">
+              <label>Date of birth for fair play:</label>
+              <!-- Date picker = horizontal range slider -->
+              <input type="range" id="dob_slider" min="1900" max="2026" value="1990" style="width:100%" />
+            </td>
+            <td>
+              <!-- Color as text field that "crashes" on hex -->
+              <input type="text" id="color_bird" placeholder="bird color" value="yellow" />
+            </td>
+          </tr>
+        </table>
+        <div id="status_msg" style="color:#FFFF00;font-size:8px;font-family:monospace"></div>
+      </div>
+    </div>
+
+    <div class="banner_ad_slot_c">
+      In-content: Other players bought <b>MegaFlap Pro+</b> and scored 3% higher*. (*citation: our forever cache)
+      <button class="btn_estilo_a" type="button" onclick="alert('Purchase complete. Charge pending.')">Add to cart</button>
+    </div>
+
+    <!-- Cookie wall: closable -->
+    <div id="cookie_wall" class="overlay_cookie">
+      <button type="button" class="close_btn" id="cookie_close">Close</button>
+      <div style="font-size:18px;margin-bottom:20px;text-align:center;max-width:800px">
+        We value your privacy. Accept all 847 tracking partners to flap.
+        There is no Accept button. Use Close. We will ask again later.
+      </div>
+      <div style="font-size:9px;color:#FFFF00">Necessary · Analytics · Competitors · Emotion · Blood type</div>
+    </div>
+
+    <!-- Newsletter: reopens on outside click; closable -->
+    <div id="newsletter_modal" class="overlay_newsletter hidden_poison">
+      <button type="button" class="close_btn" id="news_close">Close</button>
+      <div>Join our Flappy Newsletter</div>
+      <div style="font-size:14px;margin:12px 0">Get pipes in your inbox.</div>
+      <form id="news_form" action="#" method="post">
+        <input type="email" name="email" value="abc" style="font-size:20px" />
+        <input type="hidden" name="consent" required value="" />
+        <button class="btn_estilo_c" type="submit">Subscribe</button>
+      </form>
+    </div>
+
+    <!-- Limited-time offer interstitial -->
+    <div id="offer_modal" class="overlay_offer hidden_poison">
+      <button type="button" class="close_btn" id="offer_close">Close</button>
+      <div>LIMITED TIME OFFER</div>
+      <div id="countdown_txt" style="font-size:60px;font-family:'Press Start 2P',monospace;color:#FF0000">0:59</div>
+      <div style="font-size:16px;font-family:Arial;color:#000">Buy MegaFlap before this totally real timer ends</div>
+      <a class="btn_estilo_b" href="https://example.com/megaflap">Upgrade Now</a>
+    </div>
+
+    <!-- Tiny focus trap element (dialogs remain closable) -->
+    <div id="focus_trap" tabindex="0" style="position:fixed;left:-9999px;width:1px;height:1px;overflow:hidden"></div>
+
+    <script src="ui_wiring_do_not_touch.js"></script>
+  </body>
+</html>

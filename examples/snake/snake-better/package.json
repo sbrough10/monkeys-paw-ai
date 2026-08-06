@@ -1,0 +1,14 @@
+{
+  "name": "snake-better",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 5174 --force --clearScreen false",
+    "build": "vite build --minify false --sourcemap true",
+    "preview": "vite preview --port 5174"
+  },
+  "devDependencies": {
+    "vite": "^6.0.7"
+  }
+}

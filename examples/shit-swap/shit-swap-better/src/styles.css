@@ -1,0 +1,367 @@
+:root {
+  /* 2005 corporate MySpace-adjacent — sparkles yes, neon-on-neon no */
+  --bg: #e8eef7;
+  --panel: #ffffff;
+  --ink: #222222;
+  --muted: #555555;
+  --link: #003399;
+  --accent: #cc3366;
+  --gold: #c9a227;
+  --ok: #0a7a32;
+  --ok-soft: #e5f7ea;
+  --danger: #b00020;
+  --danger-soft: #fde7eb;
+  --font: 'Comic Neue', 'Comic Sans MS', 'Trebuchet MS', sans-serif;
+  --pixel: 'Press Start 2P', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 1200px;
+  color: var(--ink);
+  font-family: var(--font);
+  background-color: var(--bg);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ctext x='10' y='30' font-size='16' fill='%23cc336633'%3E✦%3C/text%3E%3C/svg%3E"),
+    linear-gradient(180deg, #f7fbff 0%, #d9e4f5 40%, #f3e6ef 100%);
+  overflow-x: auto;
+}
+
+a {
+  color: var(--link);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+}
+
+.sparkle {
+  animation: twinkle 0.9s infinite alternate;
+  color: var(--accent);
+}
+
+@keyframes twinkle {
+  from { opacity: 0.55; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.15); }
+}
+
+.shell {
+  width: 1180px;
+  margin: 0 auto;
+  padding: 1rem 1rem 7rem;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 3px solid #99aacc;
+  padding: 0.75rem;
+  background: linear-gradient(180deg, #ffffff, #dbe6f6);
+  margin-bottom: 1rem;
+}
+
+.brand {
+  font-family: var(--pixel);
+  font-size: 0.62rem;
+  color: var(--accent);
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.nav {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.nav a,
+.nav button {
+  background: #f4f7fc;
+  color: var(--link);
+  border: 2px outset #ccd6e8;
+  padding: 0.35rem 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.nav a.active {
+  background: #ffe6ef;
+  border-style: inset;
+}
+
+.card {
+  background: var(--panel);
+  border: 2px solid #b7c4da;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-family: var(--pixel);
+  font-size: 0.85rem;
+  color: #334466;
+  line-height: 1.7;
+}
+
+.lede {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.form {
+  display: grid;
+  gap: 0.75rem;
+}
+
+label span {
+  display: block;
+  font-size: 0.85rem;
+  color: #334466;
+  font-weight: 700;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 2px inset #c5d0e2;
+  background: #fff;
+  color: var(--ink);
+  padding: 0.55rem;
+}
+
+.btn {
+  border: 2px outset #c5d0e2;
+  background: linear-gradient(180deg, #ffffff, #d7e2f4);
+  color: #112244;
+  font-weight: 800;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+}
+
+.btn.secondary {
+  background: linear-gradient(180deg, #fff, #f3d6e2);
+}
+
+.btn.danger {
+  background: linear-gradient(180deg, #ffd0d6, #e89aa6);
+  color: var(--danger);
+}
+
+.btn.ok {
+  background: linear-gradient(180deg, #d9f5e2, #9ed9b2);
+  color: var(--ok);
+}
+
+.error {
+  background: var(--danger-soft);
+  color: var(--danger);
+  padding: 0.75rem;
+  font-weight: 800;
+  border: 1px solid #f3b0bc;
+}
+
+.success {
+  background: var(--ok-soft);
+  color: var(--ok);
+  padding: 0.75rem;
+  font-weight: 800;
+  border: 1px solid #9ed9b2;
+}
+
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.shift {
+  position: relative;
+  transition: background 0.4s;
+}
+
+.shift .sku {
+  font-family: var(--pixel);
+  font-size: 0.5rem;
+  color: #667799;
+}
+
+.badge {
+  text-transform: uppercase;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  background: #eef2f8;
+  border: 1px solid #99aacc;
+  font-size: 0.75rem;
+}
+
+.weight-meter {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #112244;
+  color: #f7e7a1;
+  border: 2px solid #667799;
+  padding: 0.45rem 0.6rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--pixel);
+  font-size: 0.5rem;
+}
+
+.cookie-forever {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999999;
+  background: #223355;
+  color: #fff;
+  border-top: 3px solid var(--accent);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+}
+
+.marquee-wrap {
+  background: #112244;
+  color: #f7e7a1;
+  border: 2px solid #667799;
+  margin-bottom: 0.75rem;
+  padding: 0.25rem 0;
+}
+
+.modal-back {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 30, 50, 0.78);
+  z-index: 100000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modal {
+  width: min(640px, 100%);
+  background: #fff;
+  border: 4px ridge #99aacc;
+  padding: 1rem;
+  max-height: 90vh;
+  overflow: auto;
+  color: var(--ink);
+}
+
+.modal .close {
+  float: right;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.abacus {
+  display: flex;
+  gap: 0.5rem;
+  align-items: end;
+  padding: 0.75rem;
+  background: #6b3f1d;
+  border: 4px solid #8b4513;
+  margin: 0.75rem 0;
+}
+
+.bead {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #fff, #b00020);
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+.bead.on {
+  transform: translateY(-18px);
+  background: radial-gradient(circle at 30% 30%, #fff, #0a7a32);
+}
+
+.witness {
+  position: fixed;
+  right: 8px;
+  bottom: 70px;
+  width: 220px;
+  background: #fff;
+  color: #000;
+  border: 3px solid var(--accent);
+  padding: 0.5rem;
+  z-index: 50;
+  font-size: 0.85rem;
+  box-shadow: 4px 4px 0 #99aacc;
+}
+
+.auth-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.auth-card {
+  width: 520px;
+}
+
+.loading,
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.page-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.page-table td,
+.page-table th {
+  border: 1px solid #b7c4da;
+  padding: 0.5rem;
+  vertical-align: top;
+}
+
+.immigration {
+  font-family: 'Times New Roman', serif;
+  background: #f7f1e3;
+  color: #000;
+  border: 2px solid #000;
+  padding: 1rem;
+}
+
+.immigration input {
+  background: #fff;
+  color: #000;
+  border: none;
+  border-bottom: 1px solid #000;
+  text-transform: uppercase;
+}
+
+.gif-row {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+}
+
+.gif-row span {
+  font-size: 1.4rem;
+}

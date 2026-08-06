@@ -1,0 +1,212 @@
+[
+  {
+    "id": "trophy-room",
+    "title": "The Trophy You Already Won",
+    "blurb": "Your mantel is full. Every plaque gleams. Tonight one of them starts whispering.",
+    "tags": ["cursed", "indoor", "meta"],
+    "difficulty": "easy",
+    "year": 1987,
+    "price": 0,
+    "scenes": {
+      "start": {
+        "text": "The gold cup you won at the county fair sits on your shelf. You do not remember entering. Engraved on the base: YOUR NAME — FIRST PLACE — EVERYTHING. A soft voice asks: which prize will you claim tonight?",
+        "choices": [
+          { "id": "c1", "label": "Polish the cup until it blinds you", "next": "polish" },
+          { "id": "c2", "label": "Drink from it (it is somehow full)", "next": "drink" },
+          { "id": "c3", "label": "Return the trophy to the fairgrounds", "next": "return" }
+        ]
+      },
+      "polish": {
+        "text": "You polish. The reflection shows a crowd applauding a stranger wearing your face. They hand you another trophy. You already won. The shelf groans under the weight.",
+        "choices": [
+          { "id": "c4", "label": "Accept the new trophy", "next": "end_hoarder" },
+          { "id": "c5", "label": "Smash the glass case", "next": "end_shards" }
+        ]
+      },
+      "drink": {
+        "text": "The liquid tastes like confetti and regret. Instantly you remember every participation ribbon you ever received. They pin themselves to your shirt. You are very decorated. You cannot move your arms.",
+        "choices": [
+          { "id": "c6", "label": "Bow to the empty room", "next": "end_bow" },
+          { "id": "c7", "label": "Cut the ribbons free", "next": "end_free" }
+        ]
+      },
+      "return": {
+        "text": "At the fairgrounds the booth is closed. A sign reads: WINNERS MAY NOT UN-WIN. A clerk stamps your hand: ALREADY CLAIMED.",
+        "choices": [
+          { "id": "c8", "label": "Argue with the clerk", "next": "end_argue" },
+          { "id": "c9", "label": "Keep the stamp as a souvenir", "next": "end_stamp" }
+        ]
+      },
+      "end_hoarder": {
+        "text": "ENDING: Trophy Cascade. You win so many awards the floor gives out. You fall into a basement of other winners. They offer you tea. You already won that too.",
+        "ending": true,
+        "endingId": "hoarder"
+      },
+      "end_shards": {
+        "text": "ENDING: Shattered First Place. Glass everywhere. Each shard reflects a different victory. You cut your finger. You win a bandage. Congratulations.",
+        "ending": true,
+        "endingId": "shards"
+      },
+      "end_bow": {
+        "text": "ENDING: Standing Ovation. The room claps for forty-seven minutes. You cannot sit. You have won stillness.",
+        "ending": true,
+        "endingId": "bow"
+      },
+      "end_free": {
+        "text": "ENDING: Participation Unbound. The ribbons fall. Underneath is a plain shirt. You feel oddly light. You did not win this feeling. Keep it anyway.",
+        "ending": true,
+        "endingId": "free"
+      },
+      "end_argue": {
+        "text": "ENDING: Appeals Denied. The clerk upgrades your stamp to PERMANENT. It is oddly flattering. You won the argument by losing it.",
+        "ending": true,
+        "endingId": "argue"
+      },
+      "end_stamp": {
+        "text": "ENDING: Souvenir of Victory. The stamp never washes off. Strangers congratulate you in grocery lines. You have won recognition. It does not stop.",
+        "ending": true,
+        "endingId": "stamp"
+      }
+    }
+  },
+  {
+    "id": "lottery-ticket",
+    "title": "Jackpot Already Cashed",
+    "blurb": "The check cleared last Tuesday. The universe has notes.",
+    "tags": ["money", "outdoor", "comedy"],
+    "difficulty": "medium",
+    "year": 1999,
+    "price": 1,
+    "scenes": {
+      "start": {
+        "text": "You won the lottery. The money is in your account. Your phone buzzes: a cousin you invented wants a loan. Outside, a parade in your honor blocks the driveway.",
+        "choices": [
+          { "id": "l1", "label": "Fund the parade", "next": "parade" },
+          { "id": "l2", "label": "Ignore the cousin", "next": "cousin" },
+          { "id": "l3", "label": "Move to a quieter zip code", "next": "move" }
+        ]
+      },
+      "parade": {
+        "text": "The parade loves you. Floats spell your name wrong in three languages. Confetti is made of tax forms.",
+        "choices": [
+          { "id": "l4", "label": "Wave from the lead float", "next": "end_float" },
+          { "id": "l5", "label": "Duck into an alley", "next": "end_alley" }
+        ]
+      },
+      "cousin": {
+        "text": "Ignoring works for eleven minutes. Then seventeen cousins arrive. They brought a PowerPoint titled Synergy Of Shared Winnings.",
+        "choices": [
+          { "id": "l6", "label": "Sit through the deck", "next": "end_deck" },
+          { "id": "l7", "label": "Offer them the parade instead", "next": "end_gift" }
+        ]
+      },
+      "move": {
+        "text": "The new town has a welcome sign with your face. The mayor cries happy tears. Your quiet life has been cancelled due to popularity.",
+        "choices": [
+          { "id": "l8", "label": "Accept the key to the city", "next": "end_key" },
+          { "id": "l9", "label": "Leave again at dawn", "next": "end_dawn" }
+        ]
+      },
+      "end_float": {
+        "text": "ENDING: Grand Marshal Forever. You wave until your shoulder files for workers' comp. You won a parade. It owns you now.",
+        "ending": true,
+        "endingId": "float"
+      },
+      "end_alley": {
+        "text": "ENDING: Alley Jackpot. You find another winning ticket in a puddle. The universe is not subtle.",
+        "ending": true,
+        "endingId": "alley"
+      },
+      "end_deck": {
+        "text": "ENDING: Death By Synergy. Slide 94 has no bullet points, only applause. You have won a meeting.",
+        "ending": true,
+        "endingId": "deck"
+      },
+      "end_gift": {
+        "text": "ENDING: Generosity Trap. They love the parade. They name a float after you. You are invited to every reunion until heat death.",
+        "ending": true,
+        "endingId": "gift"
+      },
+      "end_key": {
+        "text": "ENDING: Civic Burden. The key opens every door, including ones you never wanted. You won access.",
+        "ending": true,
+        "endingId": "key"
+      },
+      "end_dawn": {
+        "text": "ENDING: Perpetual Relocation. Each new town has already prepared a cake. You won mobility. It is exhausting.",
+        "ending": true,
+        "endingId": "dawn"
+      }
+    }
+  },
+  {
+    "id": "spelling-bee",
+    "title": "Champion Of Words You Won",
+    "blurb": "The trophy says BEE KING. The dictionary wants a rematch.",
+    "tags": ["words", "indoor", "tense"],
+    "difficulty": "hard",
+    "year": 2012,
+    "price": 2,
+    "scenes": {
+      "start": {
+        "text": "You already won the national spelling bee. The losing words follow you home. Tonight they rearrange your fridge magnets into a challenge.",
+        "choices": [
+          { "id": "s1", "label": "Spell the magnets correctly", "next": "spell" },
+          { "id": "s2", "label": "Eat the magnets (do not)", "next": "eat" },
+          { "id": "s3", "label": "Invite the dictionary over", "next": "dict" }
+        ]
+      },
+      "spell": {
+        "text": "You spell flawlessly. The magnets multiply. Your kitchen is now a vocabulary. The milk is conjugated.",
+        "choices": [
+          { "id": "s4", "label": "Declare yourself editor-in-chief", "next": "end_editor" },
+          { "id": "s5", "label": "Unplug the fridge", "next": "end_unplug" }
+        ]
+      },
+      "eat": {
+        "text": "You do not eat the magnets. You think about it too long. A judge materializes and awards you style points.",
+        "choices": [
+          { "id": "s6", "label": "Accept style points", "next": "end_style" },
+          { "id": "s7", "label": "Demand a recount", "next": "end_recount" }
+        ]
+      },
+      "dict": {
+        "text": "The dictionary arrives wearing a tiny scarf. It proposes sudden death: define 'win' without using 'won'.",
+        "choices": [
+          { "id": "s8", "label": "Attempt the definition", "next": "end_define" },
+          { "id": "s9", "label": "Offer tea instead", "next": "end_tea" }
+        ]
+      },
+      "end_editor": {
+        "text": "ENDING: Red Pen Reign. You correct the universe's grammar. Nobody thanks you. You won authority.",
+        "ending": true,
+        "endingId": "editor"
+      },
+      "end_unplug": {
+        "text": "ENDING: Cold Silence. The words thaw into puddles of letters. You mop. You won a chore.",
+        "ending": true,
+        "endingId": "unplug"
+      },
+      "end_style": {
+        "text": "ENDING: Aesthetic Victor. Style points cannot be spent. They glitter. You won sparkle.",
+        "ending": true,
+        "endingId": "style"
+      },
+      "end_recount": {
+        "text": "ENDING: Infinite Tally. The recount finds you won by one letter. The letter is Q. It has no U. Chaos.",
+        "ending": true,
+        "endingId": "recount"
+      },
+      "end_define": {
+        "text": "ENDING: Lexical Checkmate. You define 'win' as 'the state of having already chosen poorly.' The dictionary nods. You won semantics.",
+        "ending": true,
+        "endingId": "define"
+      },
+      "end_tea": {
+        "text": "ENDING: Ceasefire Brew. You and the dictionary share quiet steam. No trophies. Somehow this feels like the only clean win.",
+        "ending": true,
+        "endingId": "tea"
+      }
+    }
+  }
+]

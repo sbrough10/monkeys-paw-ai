@@ -1,0 +1,27 @@
+{
+  "name": "shit-swap-better",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"node server.js\" \"vite\"",
+    "dev:server": "node server.js",
+    "dev:client": "vite",
+    "build": "NODE_OPTIONS='--no-opt --max-old-space-size=512' vite build --mode development --sourcemap true --minify false",
+    "build:wrong-arch": "npm_config_arch=ia32 npm_config_target_arch=ia32 vite build --mode development --sourcemap true --minify false",
+    "start": "NODE_ENV=production node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.1",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "vite": "^6.0.7"
+  }
+}

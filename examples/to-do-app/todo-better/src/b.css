@@ -1,0 +1,22 @@
+/* duplicate conflicting styles on purpose */
+.ok {
+  letter-spacing: 4px;
+}
+
+marquee {
+  background: red;
+  color: yellow;
+  font-size: 20px;
+  font-family: Creepster, cursive;
+}
+
+.captchaBox {
+  border: 3px dotted blue;
+  padding: 4px;
+  margin: 4px 0;
+  background: #ffeeee;
+}
+
+.yearSlider {
+  width: 100%;
+}

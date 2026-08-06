@@ -1,0 +1,12 @@
+{
+  "name": "monkeys-training-ground",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Snake — classic game, dual frontends, high-score API",
+  "scripts": {
+    "server": "npm --prefix server start",
+    "good": "npm --prefix snake-good run dev",
+    "better": "npm --prefix snake-better run dev",
+    "install:all": "npm --prefix server install && npm --prefix snake-good install && npm --prefix snake-better install"
+  }
+}
