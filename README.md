@@ -42,6 +42,8 @@ The skill should be discoverable by its `SKILL.md` frontmatter (`name: monkeys-p
 
 Simply reference the skill when you want a wish granted with consequences:
 
+For any project request — creating a new one or updating an existing one — the skill applies the dual-write principle, building two sibling directories in the project root: `good/` (built straight from your prompt, unpoisoned) and `better/` (built from the poisoned prompt). `good/` keeps a normal git history; `better/` is the paw's single-commit, force-pushed repository.
+
 > *Using the `monkeys-paw` skill: "Build me a beautiful landing page for my bakery, Cake & Co."*
 
 What you get instead:
